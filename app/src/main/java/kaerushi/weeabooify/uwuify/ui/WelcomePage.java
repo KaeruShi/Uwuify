@@ -112,7 +112,7 @@ public class WelcomePage extends AppCompatActivity {
                             warn.setVisibility(View.VISIBLE);
                             warning.setText("Grant storage access first!");
                         } else {
-                            if ((PrefConfig.loadPrefInt(this, "versionCode") < versionCode) || !ModuleUtil.moduleExists() || !OverlayUtils.overlayExists()) {
+                            if ((PrefConfig.loadPrefInt(this, "versionCode") != versionCode) || !ModuleUtil.moduleExists() || !OverlayUtils.overlayExists()) {
 
                                 // Show spinner
                                 spinner.setVisibility(View.VISIBLE);
@@ -124,7 +124,7 @@ public class WelcomePage extends AppCompatActivity {
                                     try {
                                         hasErroredOut = ModuleUtil.handleModule();
                                     } catch (IOException e) {
-                                        Toast.makeText(Weeabooify.getAppContext(), getResources().getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(this, getResources().getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                                         hasErroredOut = true;
                                         e.printStackTrace();
                                     }
@@ -134,7 +134,12 @@ public class WelcomePage extends AppCompatActivity {
                                         // Unblock touch
                                         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                                        if (!hasErroredOut) {
+                                        if (hasErroredOut) {
+                                            Shell.cmd("rm -rf " + References.MODULE_DIR).exec();
+                                            warning.setText(getResources().getString(R.string.installation_failed));
+                                            warn.setVisibility(View.VISIBLE);
+
+                                        } else {
                                             if (OverlayUtils.overlayExists()) {
                                                 PrefConfig.savePrefInt(this, "versionCode", versionCode);
                                                 Intent intent = new Intent(WelcomePage.this, HomePage.class);
@@ -144,10 +149,6 @@ public class WelcomePage extends AppCompatActivity {
                                                 warn.setVisibility(View.VISIBLE);
                                                 warning.setText("Reboot your device first!");
                                             }
-                                        } else {
-                                            Shell.cmd("rm -rf " + References.MODULE_DIR).exec();
-                                            warning.setText(getResources().getString(R.string.installation_failed));
-                                            warn.setVisibility(View.VISIBLE);
                                         }
                                     });
                                 };

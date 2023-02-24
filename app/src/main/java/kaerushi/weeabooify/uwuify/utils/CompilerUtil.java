@@ -4,13 +4,13 @@ import static kaerushi.weeabooify.uwuify.utils.apksigner.CryptoUtils.readCertifi
 import static kaerushi.weeabooify.uwuify.utils.apksigner.CryptoUtils.readPrivateKey;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import kaerushi.weeabooify.uwuify.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import kaerushi.weeabooify.uwuify.Weeabooify;
 import kaerushi.weeabooify.uwuify.common.References;
 import kaerushi.weeabooify.uwuify.config.PrefConfig;
@@ -28,8 +28,7 @@ import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.Objects;
 
-public class CompilerUtil {
-
+public class CompilerUtil extends AppCompatActivity {
     private static final String TAG = "CompilerUtil";
     private static final String aapt = References.TOOLS_DIR + "/libaapt.so";
     private static final String zipalign = References.TOOLS_DIR + "/libzipalign.so";
@@ -56,7 +55,7 @@ public class CompilerUtil {
                                 @Override
                                 public void run() {
                                     // write your code here
-                                    Toast.makeText(Weeabooify.getAppContext(), "Failed", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Weeabooify.getAppContext(), "Failed to Build Overlays", Toast.LENGTH_LONG).show();
                                 }
                             });
                             return false;
