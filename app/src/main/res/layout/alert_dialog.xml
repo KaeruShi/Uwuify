@@ -48,21 +48,6 @@
         android:id="@+id/AlrtBtn"
         android:layout_marginTop="30dp"
         android:stateListAnimator="@null"
-        android:text="Reboot"
-        android:paddingHorizontal="50dp"
-        android:textSize="16sp"
-        android:textAllCaps="false"
-        android:textColor="@color/white"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button"
-        android:id="@+id/AlrtDismiss"
-        android:visibility="gone"
-        android:layout_marginTop="30dp"
-        android:stateListAnimator="@null"
-        android:text="Reboot"
         android:paddingHorizontal="50dp"
         android:textSize="16sp"
         android:textAllCaps="false"

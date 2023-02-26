@@ -253,7 +253,7 @@ public class WelcomePage extends AppCompatActivity {
                     install_module.setVisibility(View.GONE);
                 }
             } else {
-                alertDialog.show(R.drawable.ic_info, "Setup Success", "Reboot your device to apply the overlays", true);
+                alertDialog.show(R.drawable.ic_info, "Setup Failed", "Report in support group with proper logs", false);
                 Shell.cmd("rm -rf " + References.MODULE_DIR).exec();
                 install_module.setVisibility(View.VISIBLE);
             }

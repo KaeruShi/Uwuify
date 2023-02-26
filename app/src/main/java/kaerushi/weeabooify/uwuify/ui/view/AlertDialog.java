@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +23,7 @@ public class AlertDialog extends AppCompatActivity {
         this.context = context;
     }
 
-    public void show(int AlrtImg, String title, String desc, Boolean alrtbtn) {
+    public void show(int AlrtImg, String title, String desc, Boolean success) {
         if (dialog != null)
             dialog.dismiss();
 
@@ -38,24 +37,20 @@ public class AlertDialog extends AppCompatActivity {
         ImageView alrtimg = dialog.findViewById(R.id.AlrtImg);
         TextView alrttext = dialog.findViewById(R.id.title);
         TextView alrtdesc = dialog.findViewById(R.id.desc);
-        Button reboot = dialog.findViewById(R.id.AlrtBtn);
-        Button dismiss = dialog.findViewById(R.id.AlrtDismiss);
+        Button alrtBtn = dialog.findViewById(R.id.AlrtBtn);
         alrtimg.setImageResource(AlrtImg);
         alrttext.setText(title);
         alrtdesc.setText(desc);
-        reboot.setOnClickListener(view -> {
 
-            Toast.makeText(Weeabooify.getAppContext(), "Reboot!", Toast.LENGTH_SHORT).show();
+        alrtBtn.setText(success ? "Reboot" : "Dismiss");
+
+        alrtBtn.setOnClickListener(view -> {
+            if (success)
+                Toast.makeText(Weeabooify.getAppContext(), "Reboot!", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(Weeabooify.getAppContext(), "Dismissed!", Toast.LENGTH_SHORT).show();
         });
-        dismiss.setOnClickListener(view -> {
 
-            Toast.makeText(Weeabooify.getAppContext(), "Failed!", Toast.LENGTH_SHORT).show();
-        });
-
-        if (!alrtbtn) {
-            dismiss.setVisibility(View.VISIBLE);
-            reboot.setVisibility(View.GONE);
-        }
         dialog.create();
         dialog.show();
     }
