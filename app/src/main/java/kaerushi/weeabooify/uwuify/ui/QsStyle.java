@@ -146,6 +146,12 @@ public class QsStyle extends AppCompatActivity {
         Oxygen_enable = findViewById(R.id.qs_style_oxygen_enable);
         Oxygen_disable = findViewById(R.id.qs_style_oxygen_disable);
 
+        if (Objects.equals(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "LOS")) {
+            ColorOsContainer.setVisibility(View.GONE);
+            DotOsContainer.setVisibility(View.GONE);
+            MIUIContainer.setVisibility(View.GONE);
+        }
+
         // List of QS Styles
         Container = new LinearLayout[]{ColorOsContainer, DescendantContainer, DotOsContainer, MIUIContainer, OctaviContainer, OxygenContainer};
 

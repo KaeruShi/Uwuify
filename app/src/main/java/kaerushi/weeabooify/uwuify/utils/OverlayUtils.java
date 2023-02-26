@@ -4,6 +4,7 @@ import com.topjohnwu.superuser.Shell;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 public class OverlayUtils {
 
@@ -48,7 +49,7 @@ public class OverlayUtils {
     }
 
     public static boolean overlayExists() {
-        File f = new File("/system/product/overlay/UwuifyComponentADDAS1.apk");
-        return (f.exists() && !f.isDirectory());
+        List<String> list = Shell.cmd("[ -f /system/product/overlay/UwuifyComponentADDAS2.apk ] && echo \"found\" || echo \"not found\"").exec().getOut();
+        return Objects.equals(list.get(0), "found");
     }
 }

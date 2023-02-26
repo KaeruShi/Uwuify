@@ -4,9 +4,11 @@ import static kaerushi.weeabooify.uwuify.utils.apksigner.CryptoUtils.readCertifi
 import static kaerushi.weeabooify.uwuify.utils.apksigner.CryptoUtils.readPrivateKey;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,16 +30,17 @@ import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.Objects;
 
-public class CompilerUtil extends AppCompatActivity {
+public class CompilerUtil {
     private static final String TAG = "CompilerUtil";
     private static final String aapt = References.TOOLS_DIR + "/libaapt.so";
     private static final String zipalign = References.TOOLS_DIR + "/libzipalign.so";
 
-    public static boolean buildOverlays() throws IOException {
-        preExecute();
+    public static boolean buildOverlays() {
 
         // Create AndroidManifest.xml and build APK using AAPT
-        File dir = new File(References.DATA_DIR + "/Overlays/" + PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"));
+        File dir = new File(References.DATA_DIR + "/Overlays/" +
+                PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"));
+
         for (File pkg : Objects.requireNonNull(dir.listFiles())) {
             if (pkg.isDirectory()) {
                 for (File overlay : Objects.requireNonNull(pkg.listFiles())) {
@@ -51,49 +54,51 @@ public class CompilerUtil extends AppCompatActivity {
                         if (runAapt(overlay.getAbsolutePath(), overlay_name)) {
                             Log.e(TAG, "Failed to build " + overlay_name + "! Exiting...");
                             postExecute(true);
-                            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    // write your code here
-                                    Toast.makeText(Weeabooify.getAppContext(), "Failed to Build Overlays", Toast.LENGTH_LONG).show();
-                                }
-                            });
                             return false;
                         }
                     }
                 }
             }
         }
+        return false;
+    }
 
+    public static boolean alignAPK() {
         // ZipAlign the APK
-        dir = new File(References.UNSIGNED_UNALIGNED_DIR);
+        File dir = new File(References.UNSIGNED_UNALIGNED_DIR);
+        if (dir.listFiles() == null)
+            return true;
+
         for (File overlay : Objects.requireNonNull(dir.listFiles())) {
             if (!overlay.isDirectory()) {
                 if (zipAlign(overlay.getAbsolutePath(), overlay.toString().replace(References.UNSIGNED_UNALIGNED_DIR + '/', "").replace("-unaligned", ""))) {
                     Log.e(TAG, "Failed to align " + overlay + "! Exiting...");
                     postExecute(true);
-                    return false;
+                    return true;
                 }
             }
         }
-
+        return false;
+    }
+    public static boolean signAPK() {
         // Sign the APK
-        dir = new File(References.UNSIGNED_DIR);
+        File dir = new File(References.UNSIGNED_DIR);
+        if (dir.listFiles() == null)
+            return true;
+
         for (File overlay : Objects.requireNonNull(dir.listFiles())) {
             if (!overlay.isDirectory()) {
                 if (apkSigner(overlay.getAbsolutePath(), overlay.toString().replace(References.UNSIGNED_DIR + '/', "").replace("-unsigned", ""))) {
                     Log.e(TAG, "Failed to sign " + overlay + "! Exiting...");
                     postExecute(true);
-                    return false;
+                    return true;
                 }
             }
         }
-
-        postExecute(false);
         return false;
     }
 
-    private static void preExecute() throws IOException {
+    public static void preExecute() throws IOException {
         // Clean data directory
         Shell.cmd("rm -rf " + References.TEMP_DIR).exec();
         Shell.cmd("rm -rf " + References.DATA_DIR + "/Keystore").exec();
@@ -111,19 +116,18 @@ public class CompilerUtil extends AppCompatActivity {
         Shell.cmd("mkdir -p " + References.SIGNED_DIR).exec();
     }
 
-    private static void postExecute(boolean hasErroredOut) {
+    public static void postExecute(boolean hasErroredOut) {
         // Move all generated overlays to module
-        if (!hasErroredOut)
+        if (!hasErroredOut) {
             Shell.cmd("cp -a " + References.SIGNED_DIR + "/. " + References.OVERLAY_DIR).exec();
+            RootUtil.setPermissionsRecursively(644, References.OVERLAY_DIR + '/');
+        }
 
         // Clean temp directory
         Shell.cmd("rm -rf " + References.TEMP_DIR).exec();
         Shell.cmd("rm -rf " + References.DATA_DIR + "/Keystore").exec();
         Shell.cmd("rm -rf " + References.DATA_DIR + "/Overlays").exec();
 
-        // Set permissions
-        if (!hasErroredOut)
-            RootUtil.setPermissionsRecursively(644, References.OVERLAY_DIR + '/');
     }
 
     private static boolean createManifest(String pkgName, String target, String source) {

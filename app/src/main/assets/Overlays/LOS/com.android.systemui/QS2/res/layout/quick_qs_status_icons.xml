@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@*com.android.systemui:id/quick_qs_status_icons" android:focusable="false" android:layout_marginBottom="5dp" android:layout_width="0dp" android:layout_height="0dp" android:orientation="vertical" android:background="@*com.android.systemui:drawable/mm_mouth1" android:paddingTop="0dip" android:layout_marginEnd="-30dp" android:layout_below="@*com.android.systemui:id/quick_status_bar_system_icons" android:theme="@*com.android.systemui:style/QSHeaderTheme" 
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:systemui="http://schemas.android.com/apk/res-auto" >
+    <LinearLayout android:gravity="top|center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="match_parent">
+      <LinearLayout android:layout_gravity="left|center|top" android:paddingStart="20.0dip" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="105dp" >
+        <com.android.systemui.statusbar.policy.DateView android:id="@*com.android.systemui:id/date" android:layout_width="0.0dip" android:layout_height="wrap_content" android:gravity="start|center" android:singleLine="true" android:paddingStart="0.0dip"  android:textAppearance="@*com.android.systemui:style/TextAppearance.QS.Status" systemui:datePattern="@*com.android.systemui:string/abbrev_wday_month_day_no_year_alarm" />
+       <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:layout_gravity="start|center">
+       <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_gravity="start|center">
+         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center" android:layout_gravity="center" android:textSize="32sp" android:textColor="#000000" android:text="Hi, "/>
+         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center" android:layout_gravity="center" android:textSize="32sp" android:textColor="#000000" android:textStyle="bold" android:text="KaeruShi!"/>
+       </LinearLayout>
+           <TextClock android:textColor="#000000" android:textSize="14sp" android:singleLine="true" android:textAllCaps="false" android:includeFontPadding="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:format12Hour="EEEE, dd MMMM" android:format24Hour="EEEE, dd/MM/yyyy" android:textAppearance="@*com.android.systemui:style/TextAppearance.QS.Status"/>
+       </LinearLayout>
+     </LinearLayout>
+     <LinearLayout android:gravity="right" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_weight="1.0">
+       <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="end|center">
+       <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="end|center">
+         
+       </LinearLayout>
+         <com.android.systemui.statusbar.phone.StatusIconContainer android:id="@*com.android.systemui:id/statusIcons" android:tint="@android:color/white" android:layout_width="0dp" android:layout_height="0dp" android:layout_marginRight="0dip" android:layout_weight="0"/>
+     <ImageView android:src="@*com.android.systemui:drawable/dessert_ics" android:layout_marginBottom="0.0dip" android:paddingBottom="0dp" android:layout_width="100dp" android:layout_height="100dp" android:scaleType="centerCrop" />
+     <View android:layout_marginBottom="0.0dip" android:paddingBottom="0dp" android:layout_width="40dp" android:layout_height="50dp" android:scaleType="centerCrop" />
+       </LinearLayout>
+    </LinearLayout>
+  </LinearLayout>
+</LinearLayout>

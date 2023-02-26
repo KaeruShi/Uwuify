@@ -21,5 +21,16 @@
     <string name="perm_storage_access">Grant storage first</string>
     <string name="Tester">\@WxW22, @KiLLeRrN8, @BarikL, @chamanchutiyaAFK, @Guhdosrootx, @Zeetsone, @mydarkeyess, @Yogaishere</string>
     <string name="installation_failed">Installation Failed!</string>
+    <string name="installing">Installing</string>
+    <string name="init_module_installation">Initializing...</string>
+    <string name="step">Step</string>
+    <string name="loading_dialog_wait">Please Wait!</string>
+    <string name="module_installation_step1">Creating Module</string>
+    <string name="module_installation_step2">Extratcting FIles</string>
+    <string name="module_installation_step3">Creating Overlays</string>
+    <string name="module_installation_step4">Aligning Overlays</string>
+    <string name="module_installation_step5">Signing</string>
+    <string name="module_installation_step6">Clean up</string>
+    <string name="reboot_needed">Reboot your phone!</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

@@ -1,27 +1,20 @@
 package kaerushi.weeabooify.uwuify.ui;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Settings;
+import android.os.Handler;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.topjohnwu.superuser.Shell;
 
@@ -33,6 +26,8 @@ import kaerushi.weeabooify.uwuify.R;
 import kaerushi.weeabooify.uwuify.Weeabooify;
 import kaerushi.weeabooify.uwuify.common.References;
 import kaerushi.weeabooify.uwuify.config.PrefConfig;
+import kaerushi.weeabooify.uwuify.ui.view.LoadingDialogAlt;
+import kaerushi.weeabooify.uwuify.utils.CompilerUtil;
 import kaerushi.weeabooify.uwuify.utils.ModuleUtil;
 import kaerushi.weeabooify.uwuify.utils.OverlayUtils;
 import kaerushi.weeabooify.uwuify.utils.RootUtil;
@@ -40,9 +35,15 @@ import kaerushi.weeabooify.uwuify.utils.RootUtil;
 public class WelcomePage extends AppCompatActivity {
 
     private static boolean hasErroredOut = false;
+    @SuppressLint("StaticFieldLeak")
+    private static LinearLayout warn;
+    @SuppressLint("StaticFieldLeak")
+    private static TextView warning;
+    @SuppressLint("StaticFieldLeak")
+    private static Button install_module;
     private final int versionCode = BuildConfig.VERSION_CODE;
-    private final String versionName = BuildConfig.VERSION_NAME;
-    private LinearLayout spinner;
+    private static startInstallationProcess installModule = null;
+    private LoadingDialogAlt loadingDialog;
 
     @SuppressLint({"SetTextI18n", "NonConstantResourceId", "UseCompatLoadingForDrawables"})
     @Override
@@ -52,15 +53,14 @@ public class WelcomePage extends AppCompatActivity {
         setContentView(R.layout.welcome_page);
 
         // Progressbar while installing module
-        spinner = findViewById(R.id.progressBar_installingModule);
+        loadingDialog = new LoadingDialogAlt(this);
 
         // Continue button
-        Button checkRoot = findViewById(R.id.checkRoot);
-
+        install_module = findViewById(R.id.checkRoot);
 
         // Dialog to show if root not found
-        LinearLayout warn = findViewById(R.id.warn);
-        TextView warning = findViewById(R.id.warning);
+        warn = findViewById(R.id.warn);
+        warning = findViewById(R.id.warning);
 
         // Rom variant
         LinearLayout nusa_variant = findViewById(R.id.nusa_variant);
@@ -72,36 +72,47 @@ public class WelcomePage extends AppCompatActivity {
             PrefConfig.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "Nusan");
             nusa_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
             rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            los_variant.setBackground(getResources().getDrawable(R.drawable.container));
 
             Transition transition = new Fade();
             transition.setDuration(1200);
             transition.addTarget(R.id.checkRoot);
             TransitionManager.beginDelayedTransition(nusa_variant, transition);
-            checkRoot.setVisibility(View.VISIBLE);
+            install_module.setVisibility(View.VISIBLE);
         });
 
         rr_variant.setOnClickListener(v -> {
             PrefConfig.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "RR");
             rr_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
             nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            los_variant.setBackground(getResources().getDrawable(R.drawable.container));
 
             Transition transition = new Fade();
             transition.setDuration(1200);
             transition.addTarget(R.id.checkRoot);
             TransitionManager.beginDelayedTransition(rr_variant, transition);
-            checkRoot.setVisibility(View.VISIBLE);
+            install_module.setVisibility(View.VISIBLE);
+        });
+
+        los_variant.setOnClickListener(view -> {
+            PrefConfig.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "LOS");
+            los_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
+            nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
+
+            Transition transition = new Fade();
+            transition.setDuration(1200);
+            transition.addTarget(R.id.checkRoot);
+            TransitionManager.beginDelayedTransition(rr_variant, transition);
+            install_module.setVisibility(View.VISIBLE);
         });
 
         havoc_variant.setOnClickListener(view -> {
             Toast.makeText(Weeabooify.getAppContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
         });
 
-        los_variant.setOnClickListener(view -> {
-            Toast.makeText(Weeabooify.getAppContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
-        });
-
         // Check for root onClick
-        checkRoot.setOnClickListener(v -> {
+        install_module.setOnClickListener(v -> {
             if (Objects.equals(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "null"))
                 Toast.makeText(Weeabooify.getAppContext(), "Select a ROM before proceeding", Toast.LENGTH_SHORT).show();
             else {
@@ -113,47 +124,8 @@ public class WelcomePage extends AppCompatActivity {
                             warning.setText("Grant storage access first!");
                         } else {
                             if ((PrefConfig.loadPrefInt(this, "versionCode") != versionCode) || !ModuleUtil.moduleExists() || !OverlayUtils.overlayExists()) {
-
-                                // Show spinner
-                                spinner.setVisibility(View.VISIBLE);
-
-                                // Block touch
-                                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
-                                Runnable runnable = () -> {
-                                    try {
-                                        hasErroredOut = ModuleUtil.handleModule();
-                                    } catch (IOException e) {
-                                        Toast.makeText(this, getResources().getString(R.string.toast_error), Toast.LENGTH_LONG).show();
-                                        hasErroredOut = true;
-                                        e.printStackTrace();
-                                    }
-                                    runOnUiThread(() -> {
-                                        // Hide spinner
-                                        spinner.setVisibility(View.GONE);
-                                        // Unblock touch
-                                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
-                                        if (hasErroredOut) {
-                                            Shell.cmd("rm -rf " + References.MODULE_DIR).exec();
-                                            warning.setText(getResources().getString(R.string.installation_failed));
-                                            warn.setVisibility(View.VISIBLE);
-
-                                        } else {
-                                            if (OverlayUtils.overlayExists()) {
-                                                PrefConfig.savePrefInt(this, "versionCode", versionCode);
-                                                Intent intent = new Intent(WelcomePage.this, HomePage.class);
-                                                startActivity(intent);
-                                                finish();
-                                            } else {
-                                                warn.setVisibility(View.VISIBLE);
-                                                warning.setText("Reboot your device first!");
-                                            }
-                                        }
-                                    });
-                                };
-                                Thread thread = new Thread(runnable);
-                                thread.start();
+                                installModule = new startInstallationProcess();
+                                installModule.execute();
                             } else {
                                 Intent intent = new Intent(WelcomePage.this, HomePage.class);
                                 startActivity(intent);
@@ -170,5 +142,128 @@ public class WelcomePage extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        if (installModule != null) installModule.cancel(true);
+        super.onDestroy();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class startInstallationProcess extends AsyncTask<Void, Integer, Integer> {
+        @SuppressLint("SetTextI18n")
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            warn.setVisibility(View.INVISIBLE);
+
+            loadingDialog.show(getResources().getString(R.string.installing), getResources().getString(R.string.init_module_installation));
+        }
+
+        @SuppressLint("SetTextI18n")
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+            String title = getResources().getString(R.string.step) + ' ' + values[0] + "/6";
+            String desc = getResources().getString(R.string.loading_dialog_wait);
+
+            switch (values[0]) {
+                case 1:
+                    desc = getResources().getString(R.string.module_installation_step1);
+                    break;
+                case 2:
+                    desc = getResources().getString(R.string.module_installation_step2);
+                    break;
+                case 3:
+                    desc = getResources().getString(R.string.module_installation_step3);
+                    break;
+                case 4:
+                    desc = getResources().getString(R.string.module_installation_step4);
+                    break;
+                case 5:
+                    desc = getResources().getString(R.string.module_installation_step5);
+                    break;
+                case 6:
+                    desc = getResources().getString(R.string.module_installation_step6);
+                    break;
+            }
+
+            loadingDialog.setMessage(title, desc);
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            int step = 1;
+
+            publishProgress(step++);
+            try {
+                ModuleUtil.handleModule();
+            } catch (IOException e) {
+                hasErroredOut = true;
+                e.printStackTrace();
+            }
+
+            publishProgress(step++);
+            ModuleUtil.extractTools();
+
+            publishProgress(step++);
+            try {
+                CompilerUtil.preExecute();
+            } catch (IOException e) {
+                hasErroredOut = true;
+                e.printStackTrace();
+            }
+            hasErroredOut = CompilerUtil.buildOverlays();
+
+            publishProgress(step++);
+            hasErroredOut = CompilerUtil.alignAPK();
+
+            publishProgress(step++);
+            hasErroredOut = CompilerUtil.signAPK();
+
+            publishProgress(step);
+            CompilerUtil.postExecute(hasErroredOut);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+
+            loadingDialog.hide();
+
+            if (!hasErroredOut) {
+
+                if (OverlayUtils.overlayExists()) {
+                    new Handler().postDelayed(() -> {
+                        Intent intent = new Intent(WelcomePage.this, HomePage.class);
+                        startActivity(intent);
+                        finish();
+                    }, 10);
+                } else {
+                    warning.setText(getResources().getString(R.string.reboot_needed));
+                    warn.setVisibility(View.VISIBLE);
+                    install_module.setVisibility(View.GONE);
+                }
+            } else {
+                Toast.makeText(Weeabooify.getAppContext(), "Failed!", Toast.LENGTH_SHORT).show();
+                Shell.cmd("rm -rf " + References.MODULE_DIR).exec();
+                warning.setText(getResources().getString(R.string.installation_failed));
+                warn.setVisibility(View.VISIBLE);
+                install_module.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            Shell.cmd("rm -rf " + References.DATA_DIR).exec();
+            Shell.cmd("rm -rf " + References.TEMP_DIR).exec();
+            Shell.cmd("rm -rf " + References.MODULE_DIR).exec();
+        }
     }
 }

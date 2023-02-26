@@ -18,4 +18,11 @@ public class References {
     public static final String SIGNED_DIR = TEMP_DIR + "/overlays/signed";
 
 
+    // Config
+    public static final String FIRST_INSTALL = "firstInstall";
+    public static final String UPDATE_DETECTED = "updateDetected";
+    public static final String VER_CODE = "versionCode";
+
+    // Others
+    public static final int BYTE_ACCESS_RATE = 8192;
 }

@@ -17,8 +17,6 @@ import com.topjohnwu.superuser.Shell;
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
-    private static SplashActivity mContext;
-
     static {
         Shell.enableVerboseLogging = BuildConfig.DEBUG;
         if (Shell.getCachedShell() == null)
@@ -27,27 +25,33 @@ public class SplashActivity extends AppCompatActivity {
 
     private final int versionCode = BuildConfig.VERSION_CODE;
 
-    public static SplashActivity getContext() {
-        return mContext;
-    }
+    private boolean keepShowing = true;
+
+    private final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+
+            Shell.getShell(shell -> {
+
+                Intent intent;
+
+                if (RootUtil.isDeviceRooted() && RootUtil.isMagiskInstalled() && ModuleUtil.moduleExists() && OverlayUtils.overlayExists() && (versionCode == PrefConfig.loadPrefInt(Weeabooify.getAppContext(), "versionCode"))) {
+                    keepShowing = false;
+                    intent = new Intent(SplashActivity.this, HomePage.class);
+                } else {
+                    keepShowing = false;
+                    intent = new Intent(SplashActivity.this, WelcomePage.class);
+                }
+                startActivity(intent);
+                finish();
+            });
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Shell.getShell(shell -> {
-            mContext = this;
-
-            Intent intent;
-
-            if (RootUtil.isDeviceRooted() && RootUtil.isMagiskInstalled() && ModuleUtil.moduleExists() && OverlayUtils.overlayExists() && (versionCode == PrefConfig.loadPrefInt(this, "versionCode"))) {
-                intent = new Intent(SplashActivity.this, HomePage.class);
-            } else {
-                intent = new Intent(SplashActivity.this, WelcomePage.class);
-            }
-
-            startActivity(intent);
-            finish();
-        });
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 }

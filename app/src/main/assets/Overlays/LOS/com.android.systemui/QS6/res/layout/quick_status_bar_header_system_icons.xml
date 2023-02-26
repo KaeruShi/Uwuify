@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@*com.android.systemui:id/quick_status_bar_system_icons" android:background="@*android:color/transparent" android:paddingTop="@*com.android.systemui:dimen/status_bar_padding_top" android:clickable="true" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="@*android:dimen/quick_qs_offset_height" android:paddingStart="@*com.android.systemui:dimen/status_bar_padding_start" android:paddingEnd="@*com.android.systemui:dimen/status_bar_padding_end"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:systemui="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:gravity="start|center" android:orientation="horizontal" android:layout_marginStart="10.0dip" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <com.android.systemui.statusbar.policy.Clock android:textAppearance="@*com.android.systemui:style/TextAppearance.StatusBar.Clock" android:gravity="start|center" android:id="@*com.android.systemui:id/clock" android:layout_width="0dp" android:layout_height="0dp" android:minWidth="0dip" android:singleLine="true" systemui:showDark="false" />
+    </LinearLayout>
+    <android.widget.Space android:gravity="center" android:id="@*com.android.systemui:id/space" android:visibility="gone" android:layout_width="0.0dip" android:layout_height="0dp" />
+    <include layout="@*com.android.systemui:layout/ongoing_privacy_chip" />
+</LinearLayout>
