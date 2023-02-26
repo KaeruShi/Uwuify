@@ -26,6 +26,7 @@ import kaerushi.weeabooify.uwuify.R;
 import kaerushi.weeabooify.uwuify.Weeabooify;
 import kaerushi.weeabooify.uwuify.common.References;
 import kaerushi.weeabooify.uwuify.config.PrefConfig;
+import kaerushi.weeabooify.uwuify.ui.view.AlertDialog;
 import kaerushi.weeabooify.uwuify.ui.view.LoadingDialogAlt;
 import kaerushi.weeabooify.uwuify.utils.CompilerUtil;
 import kaerushi.weeabooify.uwuify.utils.ModuleUtil;
@@ -44,6 +45,7 @@ public class WelcomePage extends AppCompatActivity {
     private final int versionCode = BuildConfig.VERSION_CODE;
     private static startInstallationProcess installModule = null;
     private LoadingDialogAlt loadingDialog;
+    private AlertDialog alertDialog;
 
     @SuppressLint({"SetTextI18n", "NonConstantResourceId", "UseCompatLoadingForDrawables"})
     @Override
@@ -52,15 +54,20 @@ public class WelcomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_page);
 
+        if (OverlayUtils.overlayExists()) {
+            Intent intent = new Intent(WelcomePage.this, HomePage.class);
+            startActivity(intent);
+            finish();
+        }
+
         // Progressbar while installing module
         loadingDialog = new LoadingDialogAlt(this);
+        alertDialog = new AlertDialog(this);
 
         // Continue button
         install_module = findViewById(R.id.checkRoot);
 
         // Dialog to show if root not found
-        warn = findViewById(R.id.warn);
-        warning = findViewById(R.id.warning);
 
         // Rom variant
         LinearLayout nusa_variant = findViewById(R.id.nusa_variant);
@@ -120,8 +127,8 @@ public class WelcomePage extends AppCompatActivity {
                     if (RootUtil.isMagiskInstalled()) {
                         if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED || androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED) {
                             androidx.core.app.ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
-                            warn.setVisibility(View.VISIBLE);
-                            warning.setText("Grant storage access first!");
+
+                            Toast.makeText(Weeabooify.getAppContext(), "Select a ROM before proceeding", Toast.LENGTH_SHORT).show();
                         } else {
                             if ((PrefConfig.loadPrefInt(this, "versionCode") != versionCode) || !ModuleUtil.moduleExists() || !OverlayUtils.overlayExists()) {
                                 installModule = new startInstallationProcess();
@@ -133,12 +140,10 @@ public class WelcomePage extends AppCompatActivity {
                             }
                         }
                     } else {
-                        warn.setVisibility(View.VISIBLE);
-                        warning.setText("Use Magisk to root your device!");
+                        Toast.makeText(Weeabooify.getAppContext(), "Select a ROM before proceeding", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    warn.setVisibility(View.VISIBLE);
-                    warning.setText("Looks like your device is not rooted!");
+                    Toast.makeText(Weeabooify.getAppContext(), "Select a ROM before proceeding", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -152,12 +157,12 @@ public class WelcomePage extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     private class startInstallationProcess extends AsyncTask<Void, Integer, Integer> {
+
         @SuppressLint("SetTextI18n")
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            warn.setVisibility(View.INVISIBLE);
 
             loadingDialog.show(getResources().getString(R.string.installing), getResources().getString(R.string.init_module_installation));
         }
@@ -237,7 +242,6 @@ public class WelcomePage extends AppCompatActivity {
             loadingDialog.hide();
 
             if (!hasErroredOut) {
-
                 if (OverlayUtils.overlayExists()) {
                     new Handler().postDelayed(() -> {
                         Intent intent = new Intent(WelcomePage.this, HomePage.class);
@@ -245,15 +249,12 @@ public class WelcomePage extends AppCompatActivity {
                         finish();
                     }, 10);
                 } else {
-                    warning.setText(getResources().getString(R.string.reboot_needed));
-                    warn.setVisibility(View.VISIBLE);
+                    alertDialog.show(R.drawable.ic_info, "Setup Success", "Reboot your device to apply the overlays", true);
                     install_module.setVisibility(View.GONE);
                 }
             } else {
-                Toast.makeText(Weeabooify.getAppContext(), "Failed!", Toast.LENGTH_SHORT).show();
+                alertDialog.show(R.drawable.ic_info, "Setup Success", "Reboot your device to apply the overlays", true);
                 Shell.cmd("rm -rf " + References.MODULE_DIR).exec();
-                warning.setText(getResources().getString(R.string.installation_failed));
-                warn.setVisibility(View.VISIBLE);
                 install_module.setVisibility(View.VISIBLE);
             }
         }

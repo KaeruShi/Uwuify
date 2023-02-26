@@ -17,5 +17,5 @@
     <color name="textColorSecondary">#FF6E6E6E</color>
     <color name="textColorSecondaryLight">#B3000000</color>
     <color name="colorSuccess">#FF4FBF26</color>
-    <color name="container_selected">#FFE6C1</color>
+    <color name="container_selected">#C8FFCB</color>
 </resources>

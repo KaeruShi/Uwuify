@@ -32,5 +32,6 @@
     <string name="module_installation_step5">Signing</string>
     <string name="module_installation_step6">Clean up</string>
     <string name="reboot_needed">Reboot your phone!</string>
+    <string name="reboot_button">Reboot Now</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

@@ -9,5 +9,5 @@
     <color name="textColorSecondary">#FF69788A</color>
     <color name="textColorSecondaryLight">#B3FFFFFF</color>
     <color name="colorSuccess">#FFB7F7C4</color>
-    <color name="container_selected">#33333C</color>
+    <color name="container_selected">#464651</color>
 </resources>

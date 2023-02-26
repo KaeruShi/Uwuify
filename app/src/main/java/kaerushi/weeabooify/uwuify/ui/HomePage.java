@@ -78,7 +78,6 @@ public class HomePage extends AppCompatActivity {
 
         variantViewPager.setPageTransformer(compositePageTransformer);
 
-
         // Home page list items
         container = (ViewGroup) findViewById(R.id.home_page_list);
         addItem(R.id.home_qsStyle, "QS Style", "Change Quick Settings Layout", R.drawable.ic_qs);
@@ -148,9 +147,6 @@ public class HomePage extends AppCompatActivity {
     private void showChangelog() {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.bottomSheet);
         bottomSheetDialog.setContentView(R.layout.changelog);
-
-
-
         bottomSheetDialog.show();
 
     }
@@ -171,7 +167,7 @@ public class HomePage extends AppCompatActivity {
         container.addView(list_view);
     }
 
-    private class ScreenSlideAdapter extends FragmentStateAdapter {
+    private static class ScreenSlideAdapter extends FragmentStateAdapter {
         public ScreenSlideAdapter(HomePage homePage) {
             super(homePage);
         }

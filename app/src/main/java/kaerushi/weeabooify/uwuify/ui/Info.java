@@ -53,6 +53,9 @@ public class Info extends AppCompatActivity {
         } else if (Objects.equals(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "Nusan")) {
             marqueeVariant.setText("Nusantara");
             imgVariant.setImageResource(R.drawable.logo_nusa);
+        } else if (Objects.equals(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "LOS")) {
+            marqueeVariant.setText("LineageOs");
+            imgVariant.setImageResource(R.drawable.logo_nusa);
         } else
             marqueeVariant.setText("Unknown");
 

@@ -32,12 +32,12 @@ import kaerushi.weeabooify.uwuify.installer.QsStyleInstaller;
 
 public class QsStyle extends AppCompatActivity {
 
-    private static final String STYLE_COLOROS = "WeeabooifyComponentQS1.overlay";
-    private static final String STYLE_DESCENDANT = "WeeabooifyComponentQS2.overlay";
-    private static final String STYLE_DOTOS = "WeeabooifyComponentQS3.overlay";
-    private static final String STYLE_MIUI = "WeeabooifyComponentQS4.overlay";
-    private static final String STYLE_OCTAVI = "WeeabooifyComponentQS5.overlay";
-    private static final String STYLE_OXYGEN = "WeeabooifyComponentQS6.overlay";
+    private static final String STYLE_COLOROS = "UwuifyComponentQS1.overlay";
+    private static final String STYLE_DESCENDANT = "UwuifyComponentQS2.overlay";
+    private static final String STYLE_DOTOS = "UwuifyComponentQS3.overlay";
+    private static final String STYLE_MIUI = "UwuifyComponentQS4.overlay";
+    private static final String STYLE_OCTAVI = "UwuifyComponentQS5.overlay";
+    private static final String STYLE_OXYGEN = "UwuifyComponentQS6.overlay";
 
     LinearLayout[] Container;
     LinearLayout ColorOsContainer, DescendantContainer, DotOsContainer, MIUIContainer, OctaviContainer, OxygenContainer;
@@ -182,7 +182,7 @@ public class QsStyle extends AppCompatActivity {
     }
 
     private void checkIfApplied(TextView name, int QsStyle) {
-        if (PrefConfig.loadPrefBool(Weeabooify.getAppContext(), "WeeabooifyComponentQS" + QsStyle + ".overlay")) {
+        if (PrefConfig.loadPrefBool(Weeabooify.getAppContext(), "UwuifyComponentQS" + QsStyle + ".overlay")) {
             name.setTextColor(getResources().getColor(R.color.colorSuccess));
         } else {
             name.setTextColor(getResources().getColor(R.color.textColorPrimary));

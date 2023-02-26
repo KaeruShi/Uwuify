@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class PrefConfig {
 
-    private static final String SharedPref = "kaerushi.weeabooify.uwu";
+    private static final String SharedPref = "kaerushi.weeabooify.uwuify";
 
     // Save sharedPref config
     public static void savePrefBool(Context context, String key, boolean val) {
