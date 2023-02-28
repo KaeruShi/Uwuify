@@ -3,21 +3,7 @@ package kaerushi.weeabooify.uwuify.utils;
 import static kaerushi.weeabooify.uwuify.utils.apksigner.CryptoUtils.readCertificate;
 import static kaerushi.weeabooify.uwuify.utils.apksigner.CryptoUtils.readPrivateKey;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
-import android.view.WindowManager;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import kaerushi.weeabooify.uwuify.Weeabooify;
-import kaerushi.weeabooify.uwuify.common.References;
-import kaerushi.weeabooify.uwuify.config.PrefConfig;
-import kaerushi.weeabooify.uwuify.utils.apksigner.JarMap;
-import kaerushi.weeabooify.uwuify.utils.apksigner.SignAPK;
 
 import com.topjohnwu.superuser.Shell;
 
@@ -29,6 +15,12 @@ import java.io.InputStream;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.Objects;
+
+import kaerushi.weeabooify.uwuify.Weeabooify;
+import kaerushi.weeabooify.uwuify.common.References;
+import kaerushi.weeabooify.uwuify.config.PrefConfig;
+import kaerushi.weeabooify.uwuify.utils.apksigner.JarMap;
+import kaerushi.weeabooify.uwuify.utils.apksigner.SignAPK;
 
 public class CompilerUtil {
     private static final String TAG = "CompilerUtil";
@@ -80,6 +72,7 @@ public class CompilerUtil {
         }
         return false;
     }
+
     public static boolean signAPK() {
         // Sign the APK
         File dir = new File(References.UNSIGNED_DIR);
@@ -107,6 +100,11 @@ public class CompilerUtil {
         // Extract keystore and overlays from assets
         FileUtil.copyAssets("Keystore");
         FileUtil.copyAssets("Overlays/" + PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"));
+        try {
+            CryptoManager.decryptFileRecursively(new File(Weeabooify.getAppContext().getFilesDir() + "/Overlays/" + PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Create temp directory
         Shell.cmd("rm -rf " + References.TEMP_DIR + "; mkdir -p " + References.TEMP_DIR).exec();
