@@ -16,6 +16,7 @@ import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.Objects;
 
+import kaerushi.weeabooify.uwuify.Weeabooify;
 import kaerushi.weeabooify.uwuify.common.References;
 import kaerushi.weeabooify.uwuify.utils.apksigner.JarMap;
 import kaerushi.weeabooify.uwuify.utils.apksigner.SignAPK;
@@ -71,6 +72,7 @@ public class AOSPCompilerUtil {
         }
         return false;
     }
+
     public static boolean signAPK() {
         // Sign the APK
         File dir = new File(References.UNSIGNED_DIR);
@@ -97,7 +99,12 @@ public class AOSPCompilerUtil {
 
         // Extract keystore and overlays from assets
         FileUtil.copyAssets("Keystore");
-        FileUtil.copyAssets("Overlays/" + "AOSP");
+        FileUtil.copyAssets("Overlays/AOSP");
+        try {
+            CryptoManager.decryptFileRecursively(new File(Weeabooify.getAppContext().getFilesDir() + "/Overlays/AOSP"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Create temp directory
         Shell.cmd("rm -rf " + References.TEMP_DIR + "; mkdir -p " + References.TEMP_DIR).exec();
