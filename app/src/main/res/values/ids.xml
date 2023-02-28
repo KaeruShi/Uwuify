@@ -2,6 +2,7 @@
 <resources>
     <!-- Home Page List Items -->
     <item name="home_qsStyle" type="id" />
+    <item name="home_notifStyle" type="id" />
     <item name="home_extras" type="id" />
     <item name="home_info" type="id" />
 

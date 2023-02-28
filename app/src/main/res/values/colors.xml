@@ -18,4 +18,10 @@
     <color name="textColorSecondaryLight">#B3000000</color>
     <color name="colorSuccess">#FF4FBF26</color>
     <color name="container_selected">#C8FFCB</color>
+
+
+    <color name="switch_track_active">@color/colorAccent</color>
+    <color name="switch_track_inactive">#dddddd</color>
+    <color name="switch_thumb_active">@color/white</color>
+    <color name="switch_thumb_inactive">@color/white</color>
 </resources>

@@ -50,6 +50,9 @@
             android:name=".ui.QsStyle"
             android:exported="false" />
         <activity
+            android:name=".ui.NotificationStyle"
+            android:exported="false" />
+        <activity
             android:name=".ui.HomePage"
             android:exported="false" />
         <activity

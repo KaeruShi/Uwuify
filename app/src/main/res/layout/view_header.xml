@@ -2,21 +2,23 @@
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="130dp"
+    android:id="@+id/appbarlayout"
     android:background="@color/transparent"
-    android:fitsSystemWindows="true"
+    app:elevation="0dp"
+    android:clipChildren="false"
     android:theme="@style/Theme.Weeabooify">
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:id="@+id/collapsing_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="0dp"
+        android:clipChildren="false"
         android:background="@color/colorBackground"
-        android:fitsSystemWindows="true"
+        app:expandedTitleMarginStart="25dp"
         app:collapsedTitleTextAppearance="@style/Toolbar.TitleText.Collapsed"
         app:collapsedTitleTextColor="@color/textColorPrimary"
-        app:contentScrim="@color/transparent"
+        app:contentScrim="@drawable/scrim"
         app:expandedTitleMarginBottom="10dp"
         app:expandedTitleTextAppearance="@style/Toolbar.TitleText.Expanded"
         app:expandedTitleTextColor="@color/textColorPrimary"
@@ -25,14 +27,31 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            app:titleMarginStart="15dp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@drawable/arrow"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
             app:layout_collapseMode="pin"
             app:titleTextAppearance="@style/Toolbar.TitleText" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="25dp"
+                app:layout_collapseMode="parallax"
+                android:id="@+id/iconApp"
+                android:src="@mipmap/ic_launcher"/>
+
+            <ImageView
+                android:id="@+id/menu_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:layout_collapseMode="parallax"
+                android:layout_gravity="end"
+                android:background="?actionBarItemBackground"
+                android:layout_margin="25dp"
+                android:padding="12dp"
+                android:src="@drawable/ic_menu"
+                android:contentDescription="Changelog" />
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
 

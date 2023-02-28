@@ -18,6 +18,10 @@ public class References {
     public static final String SIGNED_DIR = TEMP_DIR + "/overlays/signed";
 
 
+    // Preference files
+    public static final String SharedPref = Weeabooify.getAppContext().getPackageName();
+
+
     // Config
     public static final String FIRST_INSTALL = "firstInstall";
     public static final String UPDATE_DETECTED = "updateDetected";

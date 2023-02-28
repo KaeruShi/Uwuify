@@ -3,9 +3,14 @@ package kaerushi.weeabooify.uwuify.config;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import kaerushi.weeabooify.uwuify.Weeabooify;
+
 public class PrefConfig {
 
+    static SharedPreferences pref = Weeabooify.getAppContext().getSharedPreferences(Weeabooify.getAppContext().getPackageName(), Context.MODE_PRIVATE);
     private static final String SharedPref = "kaerushi.weeabooify.uwuify";
+    static SharedPreferences.Editor editor = pref.edit();
+
 
     // Save sharedPref config
     public static void savePrefBool(Context context, String key, boolean val) {
@@ -43,5 +48,14 @@ public class PrefConfig {
     public static String loadPrefSettings(Context context, String key) {
         SharedPreferences pref = context.getSharedPreferences(SharedPref, Context.MODE_PRIVATE);
         return pref.getString(key, "null");
+    }
+
+    // Get Boolean
+    public static boolean getBoolean(String key, boolean b) {
+        return pref.getBoolean(key, false);
+    }
+
+    public static void putBoolean(String key, boolean val) {
+        editor.putBoolean(key, val).apply();
     }
 }

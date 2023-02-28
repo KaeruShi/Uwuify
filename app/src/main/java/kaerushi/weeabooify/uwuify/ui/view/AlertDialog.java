@@ -4,15 +4,17 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.topjohnwu.superuser.Shell;
+
 import kaerushi.weeabooify.uwuify.R;
-import kaerushi.weeabooify.uwuify.Weeabooify;
 
 public class AlertDialog extends AppCompatActivity {
 
@@ -44,15 +46,28 @@ public class AlertDialog extends AppCompatActivity {
 
         alrtBtn.setText(success ? "Reboot" : "Dismiss");
 
+        if (success) {
+            alrtdesc.setGravity(Gravity.CENTER);
+        }
+
         alrtBtn.setOnClickListener(view -> {
-            if (success)
-                Toast.makeText(Weeabooify.getAppContext(), "Reboot!", Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(Weeabooify.getAppContext(), "Dismissed!", Toast.LENGTH_SHORT).show();
+            if (success) {
+                new Handler().postDelayed(restartDevice(), 200);
+                dialog.dismiss();
+            }
+            else {
+
+                dialog.dismiss();
+            }
         });
 
         dialog.create();
         dialog.show();
+    }
+
+    private static Runnable restartDevice() {
+        Shell.cmd("su -c 'svc power reboot'").exec();
+        return null;
     }
 
     public void hide() {

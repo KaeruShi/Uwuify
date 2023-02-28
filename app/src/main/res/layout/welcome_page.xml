@@ -48,7 +48,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:animateLayoutChanges="true"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -209,6 +210,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="12dp"
+                android:id="@+id/aosp_variant"
                 android:background="@drawable/container"
                 android:gravity="left|center"
                 android:orientation="horizontal"
@@ -308,37 +310,9 @@
                 android:textColor="@color/colorBackground"
                 android:textSize="22dp"
                 android:textStyle="bold"
-                android:visibility="invisible"
-                tools:ignore="SpUsage" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:gravity="bottom"
-            android:orientation="vertical">
-
-
-            <Button
-                android:id="@+id/reboot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/button"
-                android:letterSpacing="0.05"
-                android:textAllCaps="false"
-                android:paddingStart="32dp"
-                android:paddingEnd="32dp"
-                android:stateListAnimator="@null"
-                android:text="@string/reboot_button"
-                android:textColor="@color/colorBackground"
-                android:textSize="22dp"
-                android:textStyle="bold"
                 android:visibility="gone"
                 tools:ignore="SpUsage" />
+
         </LinearLayout>
     </LinearLayout>
 

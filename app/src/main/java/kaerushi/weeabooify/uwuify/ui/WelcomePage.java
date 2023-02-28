@@ -32,6 +32,7 @@ import kaerushi.weeabooify.uwuify.utils.CompilerUtil;
 import kaerushi.weeabooify.uwuify.utils.ModuleUtil;
 import kaerushi.weeabooify.uwuify.utils.OverlayUtils;
 import kaerushi.weeabooify.uwuify.utils.RootUtil;
+import kaerushi.weeabooify.uwuify.utils.AOSPCompilerUtil;
 
 public class WelcomePage extends AppCompatActivity {
 
@@ -74,12 +75,14 @@ public class WelcomePage extends AppCompatActivity {
         LinearLayout rr_variant = findViewById(R.id.rr_variant);
         LinearLayout havoc_variant = findViewById(R.id.havoc_variant);
         LinearLayout los_variant = findViewById(R.id.los_variant);
+        LinearLayout aosp_variant = findViewById(R.id.aosp_variant);
 
         nusa_variant.setOnClickListener(v -> {
             PrefConfig.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "Nusan");
             nusa_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
             rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
             los_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            aosp_variant.setBackground(getResources().getDrawable(R.drawable.container));
 
             Transition transition = new Fade();
             transition.setDuration(1200);
@@ -93,6 +96,7 @@ public class WelcomePage extends AppCompatActivity {
             rr_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
             nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
             los_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            aosp_variant.setBackground(getResources().getDrawable(R.drawable.container));
 
             Transition transition = new Fade();
             transition.setDuration(1200);
@@ -106,16 +110,31 @@ public class WelcomePage extends AppCompatActivity {
             los_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
             nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
             rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            aosp_variant.setBackground(getResources().getDrawable(R.drawable.container));
 
             Transition transition = new Fade();
             transition.setDuration(1200);
             transition.addTarget(R.id.checkRoot);
-            TransitionManager.beginDelayedTransition(rr_variant, transition);
+            TransitionManager.beginDelayedTransition(los_variant, transition);
             install_module.setVisibility(View.VISIBLE);
         });
 
         havoc_variant.setOnClickListener(view -> {
             Toast.makeText(Weeabooify.getAppContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
+        });
+
+        aosp_variant.setOnClickListener(view -> {
+            PrefConfig.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "AOSP");
+            aosp_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
+            los_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
+
+            Transition transition = new Fade();
+            transition.setDuration(1200);
+            transition.addTarget(R.id.checkRoot);
+            TransitionManager.beginDelayedTransition(aosp_variant, transition);
+            install_module.setVisibility(View.VISIBLE);
         });
 
         // Check for root onClick
@@ -172,7 +191,7 @@ public class WelcomePage extends AppCompatActivity {
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
 
-            String title = getResources().getString(R.string.step) + ' ' + values[0] + "/6";
+            String title = getResources().getString(R.string.step) + ' ' + values[0] + "/10";
             String desc = getResources().getString(R.string.loading_dialog_wait);
 
             switch (values[0]) {
@@ -194,6 +213,15 @@ public class WelcomePage extends AppCompatActivity {
                 case 6:
                     desc = getResources().getString(R.string.module_installation_step6);
                     break;
+                case 7:
+                    desc = getResources().getString(R.string.module_installation_step7);
+                    break;
+                case 8:
+                    desc = getResources().getString(R.string.module_installation_step8);
+                    break;
+                case 9:
+                    desc = getResources().getString(R.string.module_installation_step9);
+                    break;
             }
 
             loadingDialog.setMessage(title, desc);
@@ -214,6 +242,28 @@ public class WelcomePage extends AppCompatActivity {
             publishProgress(step++);
             ModuleUtil.extractTools();
 
+            // AOSP
+            publishProgress(step++);
+            try {
+                AOSPCompilerUtil.preExecute();
+            } catch (IOException e) {
+                hasErroredOut = true;
+                e.printStackTrace();
+            }
+
+            publishProgress(step++);
+            hasErroredOut = AOSPCompilerUtil.buildOverlays();
+
+            publishProgress(step++);
+            hasErroredOut = AOSPCompilerUtil.alignAPK();
+
+            publishProgress(step++);
+            hasErroredOut = AOSPCompilerUtil.signAPK();
+
+            publishProgress(step++);
+            AOSPCompilerUtil.postExecute(hasErroredOut);
+
+            // Variant
             publishProgress(step++);
             try {
                 CompilerUtil.preExecute();
@@ -226,10 +276,9 @@ public class WelcomePage extends AppCompatActivity {
             publishProgress(step++);
             hasErroredOut = CompilerUtil.alignAPK();
 
-            publishProgress(step++);
+            publishProgress(step);
             hasErroredOut = CompilerUtil.signAPK();
 
-            publishProgress(step);
             CompilerUtil.postExecute(hasErroredOut);
 
             return null;
@@ -253,7 +302,7 @@ public class WelcomePage extends AppCompatActivity {
                     install_module.setVisibility(View.GONE);
                 }
             } else {
-                alertDialog.show(R.drawable.ic_info, "Setup Failed", "Report in support group with proper logs", false);
+                alertDialog.show(R.drawable.ic_info, "Setup Failed", getString(R.string.reason), false);
                 Shell.cmd("rm -rf " + References.MODULE_DIR).exec();
                 install_module.setVisibility(View.VISIBLE);
             }

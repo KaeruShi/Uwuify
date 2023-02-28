@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/container"
-    android:elevation="8dp"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingStart="48dp"
@@ -34,10 +33,7 @@
         android:id="@+id/desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:textAlignment="center"
         android:textColor="@color/textColorSecondary"
         android:textSize="18sp"/>
 
@@ -46,7 +42,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button"
         android:id="@+id/AlrtBtn"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:stateListAnimator="@null"
         android:paddingHorizontal="50dp"
         android:textSize="16sp"

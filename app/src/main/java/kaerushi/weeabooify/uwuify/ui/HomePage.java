@@ -30,6 +30,7 @@ import kaerushi.weeabooify.uwuify.services.BackgroundService;
 import kaerushi.weeabooify.uwuify.utils.FabricatedOverlay;
 import kaerushi.weeabooify.uwuify.utils.OverlayUtils;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class HomePage extends AppCompatActivity {
     private final String TAG = "WelcomePage";
     ViewPager2 variantViewPager;
     ImageView ImgMenu;
-    LinearLayout home_qsStyle, home_progressBar, home_extras, home_info, changelogLL;
+    LinearLayout home_qsStyle, home_notifStyle, home_progressBar, home_extras, home_info, changelogLL;
     private ViewGroup container;
     private FragmentStateAdapter pagerAdapter;
 
@@ -52,10 +53,44 @@ public class HomePage extends AppCompatActivity {
 
         PrefConfig.savePrefBool(Weeabooify.getAppContext(), "onHomePage", true);
 
+        // Header
         ImgMenu = findViewById(R.id.menu_button);
         ImgMenu.setOnClickListener(view -> {
             showChangelog();
         });
+        ImageView icon = findViewById(R.id.iconApp);
+        AppBarLayout appBarLayout = findViewById(R.id.appbarlayout);
+        appBarLayout.setExpanded(true);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                float percentage = (float) 1f - Math.abs(verticalOffset / (float)  appBarLayout.getTotalScrollRange());
+                if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
+                    icon.animate()
+                            .alpha(0f)
+                            .setDuration(50);
+                    ImgMenu.animate()
+                            .setDuration(100)
+                            .translationY(35);
+                    ImgMenu.animate().scaleX(0.8f).scaleY(0.8F);
+                } else if (verticalOffset == 0) {
+                    icon.animate()
+                            .alpha(1f)
+                            .setDuration(100);
+                    ImgMenu.animate()
+                            .setDuration(100)
+                            .translationY(0)
+                            .scaleY(1)
+                            .scaleX(1);
+                } else {
+                    icon.animate()
+                            .alpha(percentage)
+                            .setDuration(100);
+                }
+            }
+        });
+
+
 
         variantViewPager = findViewById(R.id.variantPager);
         pagerAdapter = new ScreenSlideAdapter(this);
@@ -80,7 +115,8 @@ public class HomePage extends AppCompatActivity {
 
         // Home page list items
         container = (ViewGroup) findViewById(R.id.home_page_list);
-        addItem(R.id.home_qsStyle, "QS Style", "Change Quick Settings Layout", R.drawable.ic_qs);
+        addItem(R.id.home_qsStyle, "QS Style", "Change Quick Settings layout", R.drawable.ic_qs);
+        addItem(R.id.home_notifStyle, "Notification Style", "Change notification style", R.drawable.ic_qs);
         addItem(R.id.home_extras, "Extras", "Additions tweaks and settings", R.drawable.ic_settings);
         addItem(R.id.home_info, "About", "Information about this app", R.drawable.ic_info);
 
@@ -117,6 +153,17 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomePage.this, QsStyle.class);
+                startActivity(intent);
+            }
+        });
+
+        // Notif Style item OnCLick
+        home_notifStyle = findViewById(R.id.home_notifStyle);
+        home_notifStyle.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_a));
+        home_notifStyle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomePage.this, NotificationStyle.class);
                 startActivity(intent);
             }
         });
@@ -175,7 +222,7 @@ public class HomePage extends AppCompatActivity {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     return new FragmentSC();
                 case 1:

@@ -6,7 +6,12 @@
     <string name="restart">Restart</string>
     <string name="disable">Disable</string>
     <string name="Welcome">Welcome to <b>Uwuify</b>\nLet\'s change your boring UI.</string>
-    <string name="Changelog">• Initial Release
+    <string name="Changelog"><b>v1.1</b>
+        <item>\n• Add Rom Support HavocOs</item>
+        <item>\n• Add Rom Support LineageOs</item>
+        <item>\n• Add Rom Support Universal</item>
+        <item>\n\n<b>v1.0</b></item>
+        <item>\n• Initial Release</item>
         <item>\n• Add Rom Support Nusantara</item>
         <item>\n• Add Rom Support Resurrection Remix</item>
         <item>\n• Add Style ColorOS</item>
@@ -26,12 +31,20 @@
     <string name="step">Step</string>
     <string name="loading_dialog_wait">Please Wait!</string>
     <string name="module_installation_step1">Creating Module</string>
-    <string name="module_installation_step2">Extratcting FIles</string>
-    <string name="module_installation_step3">Creating Overlays</string>
-    <string name="module_installation_step4">Aligning Overlays</string>
-    <string name="module_installation_step5">Signing</string>
-    <string name="module_installation_step6">Clean up</string>
+    <string name="module_installation_step2">Extratcting Files</string>
+    <string name="module_installation_step3">Creating Setup</string>
+    <string name="module_installation_step4">Creating Overlays</string>
+    <string name="module_installation_step5">Aligning Overlays</string>
+    <string name="module_installation_step6">Signing</string>
+    <string name="module_installation_step7">Applying</string>
+    <string name="module_installation_step8">Clean Up</string>
+    <string name="module_installation_step9">Almost done</string>
     <string name="reboot_needed">Reboot your phone!</string>
     <string name="reboot_button">Reboot Now</string>
+    <string name="reason">Reason:
+        <item>\n• Make sure choose your ROM correctly</item>
+        <item>\n• Not supported for SystemUI Mod/DCRC</item>
+        <item>\n• Someting wrong, report to Group</item>
+    </string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

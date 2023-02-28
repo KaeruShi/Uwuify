@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="container_margin">12dp</dimen>
-    <dimen name="container_marginSide">16dp</dimen>
+    <dimen name="container_marginSide">20dp</dimen>
     <dimen name="container_padding">20dp</dimen>
     <dimen name="container_paddingSide">20dp</dimen>
     <dimen name="cont_title_size">18dp</dimen>

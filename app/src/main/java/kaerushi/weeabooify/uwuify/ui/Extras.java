@@ -1,11 +1,13 @@
 package kaerushi.weeabooify.uwuify.ui;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +41,7 @@ public class Extras extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "UseSwitchCompatOrMaterialCode"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,38 @@ public class Extras extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        // Hide VPN
+        Switch hide_vpn = findViewById(R.id.switch_vpn);
+        hide_vpn.setChecked(PrefConfig.getBoolean("UwuifyComponentHDVPN",true));
+
+        hide_vpn.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                PrefConfig.putBoolean("UwuifyComponentHDVPN", true);
+                hide_vpn.setChecked(true);
+                OverlayUtils.enableOverlay("UwuifyComponentHDVPN.overlay");
+            } else {
+                PrefConfig.putBoolean("UwuifyComponentHDVPN", false);
+                hide_vpn.setChecked(false);
+                OverlayUtils.disableOverlay("UwuifyComponentHDVPN.overlay");
+            }
+        });
+
+        // Hide Drag Handle
+        Switch hide_drag_handle = findViewById(R.id.switch_drag_handle);
+        hide_drag_handle.setChecked(PrefConfig.getBoolean("UwuifyComponentHDDH", true));
+
+        hide_drag_handle.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                PrefConfig.putBoolean("UwuifyComponentHDDH", true);
+                hide_drag_handle.setChecked(true);
+                OverlayUtils.enableOverlay("UwuifyComponentHDDH.overlay");
+            } else {
+                PrefConfig.putBoolean("UwuifyComponentHDDH", false);
+                hide_drag_handle.setChecked(false);
+                OverlayUtils.disableOverlay("UwuifyComponentHDDH.overlay");
+            }
+        });
 
         // Disable Everything
         TextView list_title_disableEverything = findViewById(R.id.list_title_disableEverything);

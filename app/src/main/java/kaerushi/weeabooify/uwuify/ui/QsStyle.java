@@ -1,5 +1,6 @@
 package kaerushi.weeabooify.uwuify.ui;
 
+import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.transition.AutoTransition;
