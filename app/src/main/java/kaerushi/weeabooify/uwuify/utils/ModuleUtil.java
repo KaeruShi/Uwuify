@@ -4,6 +4,10 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
 import kaerushi.weeabooify.uwuify.BuildConfig;
 import kaerushi.weeabooify.uwuify.common.References;
 
@@ -149,4 +153,5 @@ public class ModuleUtil {
         myInput.close();
         myOutput.close();
     }
+
 }

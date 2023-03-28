@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 Intent intent;
 
-                if (RootUtil.isDeviceRooted() && RootUtil.isMagiskInstalled() && ModuleUtil.moduleExists() && OverlayUtils.overlayExists() && (versionCode == PrefConfig.loadPrefInt(Weeabooify.getAppContext(), "versionCode"))) {
+                if (RootUtil.isDeviceRooted() && RootUtil.isMagiskInstalled() && ModuleUtil.moduleExists() && OverlayUtils.overlayExists() && (versionCode != PrefConfig.loadPrefInt(Weeabooify.getAppContext(), "versionCode"))) {
                     keepShowing = false;
                     intent = new Intent(SplashActivity.this, HomePage.class);
                 } else {

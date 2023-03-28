@@ -100,11 +100,6 @@ public class AOSPCompilerUtil {
         // Extract keystore and overlays from assets
         FileUtil.copyAssets("Keystore");
         FileUtil.copyAssets("Overlays/AOSP");
-        try {
-            CryptoManager.decryptFileRecursively(new File(Weeabooify.getAppContext().getFilesDir() + "/Overlays/AOSP"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         // Create temp directory
         Shell.cmd("rm -rf " + References.TEMP_DIR + "; mkdir -p " + References.TEMP_DIR).exec();

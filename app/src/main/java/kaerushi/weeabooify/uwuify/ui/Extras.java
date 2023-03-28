@@ -33,6 +33,7 @@ public class Extras extends AppCompatActivity {
         for (String overlay : overlays) {
             OverlayUtils.disableOverlay(overlay);
             PrefConfig.savePrefBool(Weeabooify.getAppContext(), overlay, false);
+            PrefConfig.clearAllPrefs();
         }
 
         for (String fabricatedOverlay : fabricatedOverlays) {
@@ -60,7 +61,7 @@ public class Extras extends AppCompatActivity {
 
         // Hide VPN
         Switch hide_vpn = findViewById(R.id.switch_vpn);
-        hide_vpn.setChecked(PrefConfig.getBoolean("UwuifyComponentHDVPN",true));
+        hide_vpn.setChecked(PrefConfig.getBoolean("UwuifyComponentHDVPN"));
 
         hide_vpn.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
@@ -76,7 +77,7 @@ public class Extras extends AppCompatActivity {
 
         // Hide Drag Handle
         Switch hide_drag_handle = findViewById(R.id.switch_drag_handle);
-        hide_drag_handle.setChecked(PrefConfig.getBoolean("UwuifyComponentHDDH", true));
+        hide_drag_handle.setChecked(PrefConfig.getBoolean("UwuifyComponentHDDH"));
 
         hide_drag_handle.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {

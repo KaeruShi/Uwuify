@@ -51,11 +51,21 @@ public class PrefConfig {
     }
 
     // Get Boolean
-    public static boolean getBoolean(String key, boolean b) {
+    public static boolean getBoolean(String key) {
         return pref.getBoolean(key, false);
     }
 
     public static void putBoolean(String key, boolean val) {
         editor.putBoolean(key, val).apply();
+    }
+
+    // Clear one specific sharedPref config
+    public static void clearPref(String key) {
+        editor.remove(key).apply();
+    }
+
+    // Clear all sharedPref config
+    public static void clearAllPrefs() {
+        editor.clear().apply();
     }
 }

@@ -18,8 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.topjohnwu.superuser.Shell;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import kaerushi.weeabooify.uwuify.BuildConfig;
 import kaerushi.weeabooify.uwuify.R;
@@ -55,11 +61,6 @@ public class WelcomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_page);
 
-        if (OverlayUtils.overlayExists()) {
-            Intent intent = new Intent(WelcomePage.this, HomePage.class);
-            startActivity(intent);
-            finish();
-        }
 
         // Progressbar while installing module
         loadingDialog = new LoadingDialogAlt(this);
@@ -124,17 +125,18 @@ public class WelcomePage extends AppCompatActivity {
         });
 
         aosp_variant.setOnClickListener(view -> {
-            PrefConfig.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "AOSP");
-            aosp_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
-            los_variant.setBackground(getResources().getDrawable(R.drawable.container));
-            nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
-            rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
-
-            Transition transition = new Fade();
-            transition.setDuration(1200);
-            transition.addTarget(R.id.checkRoot);
-            TransitionManager.beginDelayedTransition(aosp_variant, transition);
-            install_module.setVisibility(View.VISIBLE);
+            Toast.makeText(Weeabooify.getAppContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
+//            PrefConfig.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "AOSP");
+//            aosp_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
+//            los_variant.setBackground(getResources().getDrawable(R.drawable.container));
+//            nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
+//            rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
+//
+//            Transition transition = new Fade();
+//            transition.setDuration(1200);
+//            transition.addTarget(R.id.checkRoot);
+//            TransitionManager.beginDelayedTransition(aosp_variant, transition);
+//            install_module.setVisibility(View.VISIBLE);
         });
 
         // Check for root onClick

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.android.systemui.statusbar.NotificationShelf android:focusable="true" android:clickable="true" android:elevation="-10px" android:layout_width="fill_parent" android:layout_height="@*com.android.systemui:dimen/notification_shelf_height"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.android.systemui.statusbar.notification.row.NotificationBackgroundView android:id="@*com.android.systemui:id/backgroundNormal" android:layout_width="fill_parent" android:layout_height="fill_parent" />
-    <com.android.systemui.statusbar.notification.row.NotificationBackgroundView android:id="@*com.android.systemui:id/backgroundDimmed" android:layout_width="fill_parent" android:layout_height="fill_parent" />
-    <com.android.systemui.statusbar.phone.NotificationIconContainer android:gravity="center_vertical" android:id="@*com.android.systemui:id/content" android:layout_width="fill_parent" android:layout_height="fill_parent" android:paddingStart="@*com.android.systemui:dimen/shelf_icon_container_padding" android:paddingEnd="@*com.android.systemui:dimen/shelf_icon_container_padding" />
-    <com.android.systemui.statusbar.notification.FakeShadowView android:id="@*com.android.systemui:id/fake_shadow" android:layout_width="fill_parent" android:layout_height="fill_parent" />
-</com.android.systemui.statusbar.NotificationShelf>
