@@ -49,7 +49,7 @@ public class OverlayUtils {
     }
 
     public static boolean overlayExists() {
-        List<String> list = Shell.cmd("[ -f /system/product/overlay/UwuifyComponentADDAS2.apk ] && echo \"found\" || echo \"not found\"").exec().getOut();
+        List<String> list = Shell.cmd("[ -f /system/product/overlay/UwuifyComponentHDDH.apk ] && echo \"found\" || echo \"not found\"").exec().getOut();
         return Objects.equals(list.get(0), "found");
     }
 }

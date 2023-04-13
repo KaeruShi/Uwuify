@@ -1,7 +1,6 @@
 package kaerushi.weeabooify.uwuify.ui;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,7 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import kaerushi.weeabooify.uwuify.Weeabooify;
 import kaerushi.weeabooify.uwuify.R;
-import kaerushi.weeabooify.uwuify.config.PrefConfig;
+import kaerushi.weeabooify.uwuify.config.Prefs;
 import kaerushi.weeabooify.uwuify.utils.FabricatedOverlay;
 import kaerushi.weeabooify.uwuify.utils.OverlayUtils;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -32,13 +31,13 @@ public class Extras extends AppCompatActivity {
 
         for (String overlay : overlays) {
             OverlayUtils.disableOverlay(overlay);
-            PrefConfig.savePrefBool(Weeabooify.getAppContext(), overlay, false);
-            PrefConfig.clearAllPrefs();
+            Prefs.savePrefBool(Weeabooify.getAppContext(), overlay, false);
+            Prefs.clearAllPrefs();
         }
 
         for (String fabricatedOverlay : fabricatedOverlays) {
             FabricatedOverlay.disableOverlay(fabricatedOverlay);
-            PrefConfig.savePrefBool(Weeabooify.getAppContext(), fabricatedOverlay, false);
+            Prefs.savePrefBool(Weeabooify.getAppContext(), fabricatedOverlay, false);
         }
     }
 
@@ -61,15 +60,15 @@ public class Extras extends AppCompatActivity {
 
         // Hide VPN
         Switch hide_vpn = findViewById(R.id.switch_vpn);
-        hide_vpn.setChecked(PrefConfig.getBoolean("UwuifyComponentHDVPN"));
+        hide_vpn.setChecked(Prefs.getBoolean("UwuifyComponentHDVPN"));
 
         hide_vpn.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
-                PrefConfig.putBoolean("UwuifyComponentHDVPN", true);
+                Prefs.putBoolean("UwuifyComponentHDVPN", true);
                 hide_vpn.setChecked(true);
                 OverlayUtils.enableOverlay("UwuifyComponentHDVPN.overlay");
             } else {
-                PrefConfig.putBoolean("UwuifyComponentHDVPN", false);
+                Prefs.putBoolean("UwuifyComponentHDVPN", false);
                 hide_vpn.setChecked(false);
                 OverlayUtils.disableOverlay("UwuifyComponentHDVPN.overlay");
             }
@@ -77,15 +76,15 @@ public class Extras extends AppCompatActivity {
 
         // Hide Drag Handle
         Switch hide_drag_handle = findViewById(R.id.switch_drag_handle);
-        hide_drag_handle.setChecked(PrefConfig.getBoolean("UwuifyComponentHDDH"));
+        hide_drag_handle.setChecked(Prefs.getBoolean("UwuifyComponentHDDH"));
 
         hide_drag_handle.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
-                PrefConfig.putBoolean("UwuifyComponentHDDH", true);
+                Prefs.putBoolean("UwuifyComponentHDDH", true);
                 hide_drag_handle.setChecked(true);
                 OverlayUtils.enableOverlay("UwuifyComponentHDDH.overlay");
             } else {
-                PrefConfig.putBoolean("UwuifyComponentHDDH", false);
+                Prefs.putBoolean("UwuifyComponentHDDH", false);
                 hide_drag_handle.setChecked(false);
                 OverlayUtils.disableOverlay("UwuifyComponentHDDH.overlay");
             }

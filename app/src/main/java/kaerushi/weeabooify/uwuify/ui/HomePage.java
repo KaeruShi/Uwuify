@@ -22,7 +22,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import kaerushi.weeabooify.uwuify.Weeabooify;
 import kaerushi.weeabooify.uwuify.R;
-import kaerushi.weeabooify.uwuify.config.PrefConfig;
+import kaerushi.weeabooify.uwuify.config.Prefs;
 import kaerushi.weeabooify.uwuify.fragment.FragmentAE;
 import kaerushi.weeabooify.uwuify.fragment.FragmentSC;
 import kaerushi.weeabooify.uwuify.fragment.FragmentUWU;
@@ -34,6 +34,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.List;
+import java.util.Objects;
 
 public class HomePage extends AppCompatActivity {
 
@@ -51,7 +52,7 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
 
-        PrefConfig.savePrefBool(Weeabooify.getAppContext(), "onHomePage", true);
+        Prefs.savePrefBool(Weeabooify.getAppContext(), "onHomePage", true);
 
         // Header
         ImgMenu = findViewById(R.id.menu_button);
@@ -126,11 +127,11 @@ public class HomePage extends AppCompatActivity {
             public void run() {
                 List<String> EnabledOverlays = OverlayUtils.getEnabledOverlayList();
                 for (String overlay : EnabledOverlays)
-                    PrefConfig.savePrefBool(Weeabooify.getAppContext(), overlay, true);
+                    Prefs.savePrefBool(Weeabooify.getAppContext(), overlay, true);
 
                 List<String> EnabledFabricatedOverlays = FabricatedOverlay.getEnabledOverlayList();
                 for (String overlay : EnabledFabricatedOverlays)
-                    PrefConfig.savePrefBool(Weeabooify.getAppContext(), "fabricated" + overlay, true);
+                    Prefs.savePrefBool(Weeabooify.getAppContext(), "fabricated" + overlay, true);
             }
         };
         Thread thread1 = new Thread(runnable1);
@@ -156,6 +157,10 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "AOSP")) {
+            home_qsStyle.setVisibility(View.GONE);
+        }
 
         // Notif Style item OnCLick
         home_notifStyle = findViewById(R.id.home_notifStyle);
@@ -195,7 +200,6 @@ public class HomePage extends AppCompatActivity {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.bottomSheet);
         bottomSheetDialog.setContentView(R.layout.changelog);
         bottomSheetDialog.show();
-
     }
 
     // Function to add new item in list

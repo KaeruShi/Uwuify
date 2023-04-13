@@ -1,7 +1,7 @@
 package kaerushi.weeabooify.uwuify.installer;
 
 import kaerushi.weeabooify.uwuify.Weeabooify;
-import kaerushi.weeabooify.uwuify.config.PrefConfig;
+import kaerushi.weeabooify.uwuify.config.Prefs;
 
 import com.topjohnwu.superuser.Shell;
 
@@ -14,9 +14,8 @@ public class QsStyleInstaller {
     public static void install_pack(int n) {
         disable_others(n);
         enable_pack(n);
-        PrefConfig.savePrefBool(Weeabooify.getAppContext(), "fabricatedcornerRadius", true);
+        Prefs.savePrefBool(Weeabooify.getAppContext(), "fabricatedcornerRadius", true);
     }
-
 
     private static void enable_pack(int n) {
 

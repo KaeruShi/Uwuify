@@ -21,7 +21,6 @@ public class References {
     // Preference files
     public static final String SharedPref = Weeabooify.getAppContext().getPackageName();
 
-
     // Config
     public static final String FIRST_INSTALL = "firstInstall";
     public static final String UPDATE_DETECTED = "updateDetected";

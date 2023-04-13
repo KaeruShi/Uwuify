@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import kaerushi.weeabooify.uwuify.config.PrefConfig;
+import kaerushi.weeabooify.uwuify.config.Prefs;
 import kaerushi.weeabooify.uwuify.ui.HomePage;
 import kaerushi.weeabooify.uwuify.ui.WelcomePage;
 import kaerushi.weeabooify.uwuify.utils.ModuleUtil;
@@ -27,26 +27,20 @@ public class SplashActivity extends AppCompatActivity {
 
     private boolean keepShowing = true;
 
-    private final Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
+    private final Runnable runnable = () -> Shell.getShell(shell -> {
 
-            Shell.getShell(shell -> {
+        Intent intent;
 
-                Intent intent;
-
-                if (RootUtil.isDeviceRooted() && RootUtil.isMagiskInstalled() && ModuleUtil.moduleExists() && OverlayUtils.overlayExists() && (versionCode != PrefConfig.loadPrefInt(Weeabooify.getAppContext(), "versionCode"))) {
-                    keepShowing = false;
-                    intent = new Intent(SplashActivity.this, HomePage.class);
-                } else {
-                    keepShowing = false;
-                    intent = new Intent(SplashActivity.this, WelcomePage.class);
-                }
-                startActivity(intent);
-                finish();
-            });
+        if (RootUtil.isDeviceRooted() && RootUtil.isMagiskInstalled() && ModuleUtil.moduleExists() && OverlayUtils.overlayExists() && (versionCode != Prefs.loadPrefInt(Weeabooify.getAppContext(), "versionCode"))) {
+            keepShowing = false;
+            intent = new Intent(SplashActivity.this, HomePage.class);
+        } else {
+            keepShowing = false;
+            intent = new Intent(SplashActivity.this, WelcomePage.class);
         }
-    };
+        startActivity(intent);
+        finish();
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -46,5 +46,12 @@
         <item>\n• Not supported for SystemUI Mod/DCRC</item>
         <item>\n• Someting wrong, report to Group</item>
     </string>
+    <string name="notif_preview_desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s.</string>
+    <string name="btn_enable">Enable</string>
+    <string name="btn_disable">Disable</string>
+    <string name="opt_applied">Applied</string>
+    <string name="toast_applied">Applied!</string>
+    <string name="toast_disabled">Disabled.</string>
+    <string name="activity_title_notification">Notifiction</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

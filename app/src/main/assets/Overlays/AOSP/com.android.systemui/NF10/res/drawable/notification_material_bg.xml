@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@*com.android.systemui:color/notification_ripple_untinted_color">
+    <item>
+        <shape android:shape="rectangle">
+            <solid
+                android:color="#00000000" />
+            <corners android:radius="?android:dialogCornerRadius" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid
+                android:color="?android:colorAccent" />
+            <corners android:radius="?android:dialogCornerRadius" />
+        </shape>
+    </item>
+    <item
+        android:end="6.0dip"
+        android:start="6.0dip">
+        <shape android:shape="rectangle">
+            <solid
+                android:color="@*com.android.systemui:color/notification_material_background_color" />
+            <corners android:radius="?android:dialogCornerRadius" />
+        </shape>
+    </item>
+</ripple>

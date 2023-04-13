@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  <solid android:color="@*com.android.systemui:color/notification_material_background_color" />
+  <stroke android:width="4.0dip" android:color="?android:colorAccent" />
+  <corners android:radius="?android:dialogCornerRadius"/>
+</shape>

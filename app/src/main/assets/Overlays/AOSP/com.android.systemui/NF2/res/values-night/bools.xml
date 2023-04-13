@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<bool name="config_clipNotificationsToOutline">true</bool>
+    <dimen name="notification_divider_height">5dip</dimen>
+<bool name="config_drawNotificationBackground">false</bool>
+</resources>

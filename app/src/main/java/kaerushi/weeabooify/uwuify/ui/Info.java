@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +22,7 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 import kaerushi.weeabooify.uwuify.R;
 import kaerushi.weeabooify.uwuify.Weeabooify;
-import kaerushi.weeabooify.uwuify.config.PrefConfig;
+import kaerushi.weeabooify.uwuify.config.Prefs;
 
 public class Info extends AppCompatActivity {
 
@@ -47,13 +46,13 @@ public class Info extends AppCompatActivity {
         marqueeVersion.setSelected(true);
         CircleImageView imgVariant = findViewById(R.id.imgVariant);
 
-        if (Objects.equals(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "RR")) {
+        if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "RR")) {
             marqueeVariant.setText("Resurrection Remix");
             imgVariant.setImageResource(R.drawable.logo_rr);
-        } else if (Objects.equals(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "Nusan")) {
+        } else if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "Nusan")) {
             marqueeVariant.setText("Nusantara");
             imgVariant.setImageResource(R.drawable.logo_nusa);
-        } else if (Objects.equals(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "LOS")) {
+        } else if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "LOS")) {
             marqueeVariant.setText("LineageOs");
             imgVariant.setImageResource(R.drawable.logo_nusa);
         } else

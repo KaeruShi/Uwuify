@@ -1,6 +1,5 @@
 package kaerushi.weeabooify.uwuify.ui;
 
-import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.transition.AutoTransition;
@@ -28,7 +27,7 @@ import java.util.Objects;
 
 import kaerushi.weeabooify.uwuify.R;
 import kaerushi.weeabooify.uwuify.Weeabooify;
-import kaerushi.weeabooify.uwuify.config.PrefConfig;
+import kaerushi.weeabooify.uwuify.config.Prefs;
 import kaerushi.weeabooify.uwuify.installer.QsStyleInstaller;
 
 public class QsStyle extends AppCompatActivity {
@@ -53,7 +52,7 @@ public class QsStyle extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.qs_style);
+        setContentView(R.layout.activity_qs_style);
 
         // Header
         CollapsingToolbarLayout collapsing_toolbar = findViewById(R.id.collapsing_toolbar);
@@ -147,7 +146,7 @@ public class QsStyle extends AppCompatActivity {
         Oxygen_enable = findViewById(R.id.qs_style_oxygen_enable);
         Oxygen_disable = findViewById(R.id.qs_style_oxygen_disable);
 
-        if (Objects.equals(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "LOS")) {
+        if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "LOS")) {
             ColorOsContainer.setVisibility(View.GONE);
             DotOsContainer.setVisibility(View.GONE);
             MIUIContainer.setVisibility(View.GONE);
@@ -183,7 +182,7 @@ public class QsStyle extends AppCompatActivity {
     }
 
     private void checkIfApplied(TextView name, int QsStyle) {
-        if (PrefConfig.loadPrefBool(Weeabooify.getAppContext(), "UwuifyComponentQS" + QsStyle + ".overlay")) {
+        if (Prefs.loadPrefBool(Weeabooify.getAppContext(), "UwuifyComponentQS" + QsStyle + ".overlay")) {
             name.setTextColor(getResources().getColor(R.color.colorSuccess));
         } else {
             name.setTextColor(getResources().getColor(R.color.textColorPrimary));
@@ -221,7 +220,7 @@ public class QsStyle extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 refreshLayout(layout);
-                if (!PrefConfig.loadPrefBool(Weeabooify.getAppContext(), key)) {
+                if (!Prefs.loadPrefBool(Weeabooify.getAppContext(), key)) {
                     disable.setVisibility(View.GONE);
                     if (enable.getVisibility() == View.VISIBLE) {
                         TransitionManager.beginDelayedTransition(layout, new AutoTransition());
@@ -261,7 +260,7 @@ public class QsStyle extends AppCompatActivity {
                 };
                 Thread thread = new Thread(runnable);
                 thread.start();
-                PrefConfig.savePrefBool(Weeabooify.getAppContext(), key, true);
+                Prefs.savePrefBool(Weeabooify.getAppContext(), key, true);
                 // Wait 1 second
                 spinner.postDelayed(new Runnable() {
                     public void run() {
@@ -297,7 +296,7 @@ public class QsStyle extends AppCompatActivity {
                 };
                 Thread thread = new Thread(runnable);
                 thread.start();
-                PrefConfig.savePrefBool(Weeabooify.getAppContext(), key, false);
+                Prefs.savePrefBool(Weeabooify.getAppContext(), key, false);
                 // Wait 1 second
                 spinner.postDelayed(new Runnable() {
                     public void run() {
@@ -319,12 +318,12 @@ public class QsStyle extends AppCompatActivity {
     }
 
     private void disable_others(String pack) {
-        PrefConfig.savePrefBool(Weeabooify.getAppContext(), STYLE_COLOROS, pack.equals(STYLE_COLOROS));
-        PrefConfig.savePrefBool(Weeabooify.getAppContext(), STYLE_DESCENDANT, pack.equals(STYLE_DESCENDANT));
-        PrefConfig.savePrefBool(Weeabooify.getAppContext(), STYLE_DOTOS, pack.equals(STYLE_DOTOS));
-        PrefConfig.savePrefBool(Weeabooify.getAppContext(), STYLE_MIUI, pack.equals(STYLE_MIUI));
-        PrefConfig.savePrefBool(Weeabooify.getAppContext(), STYLE_OCTAVI, pack.equals(STYLE_OCTAVI));
-        PrefConfig.savePrefBool(Weeabooify.getAppContext(), STYLE_OXYGEN, pack.equals(STYLE_OXYGEN));
+        Prefs.savePrefBool(Weeabooify.getAppContext(), STYLE_COLOROS, pack.equals(STYLE_COLOROS));
+        Prefs.savePrefBool(Weeabooify.getAppContext(), STYLE_DESCENDANT, pack.equals(STYLE_DESCENDANT));
+        Prefs.savePrefBool(Weeabooify.getAppContext(), STYLE_DOTOS, pack.equals(STYLE_DOTOS));
+        Prefs.savePrefBool(Weeabooify.getAppContext(), STYLE_MIUI, pack.equals(STYLE_MIUI));
+        Prefs.savePrefBool(Weeabooify.getAppContext(), STYLE_OCTAVI, pack.equals(STYLE_OCTAVI));
+        Prefs.savePrefBool(Weeabooify.getAppContext(), STYLE_OXYGEN, pack.equals(STYLE_OXYGEN));
     }
 
     // Function to check for layout changes

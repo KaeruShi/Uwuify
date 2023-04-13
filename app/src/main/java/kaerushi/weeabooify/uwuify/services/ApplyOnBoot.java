@@ -1,7 +1,7 @@
 package kaerushi.weeabooify.uwuify.services;
 
 import kaerushi.weeabooify.uwuify.Weeabooify;
-import kaerushi.weeabooify.uwuify.config.PrefConfig;
+import kaerushi.weeabooify.uwuify.config.Prefs;
 import kaerushi.weeabooify.uwuify.utils.FabricatedOverlay;
 import kaerushi.weeabooify.uwuify.utils.OverlayUtils;
 
@@ -17,11 +17,11 @@ public class ApplyOnBoot {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                if (PrefConfig.loadPrefBool(Weeabooify.getAppContext(), "fabricatedcornerRadius") && (FabricatedOverlay.isOverlayDisabled(fabricatedOverlays, "dialogCornerRadius") || FabricatedOverlay.isOverlayDisabled(fabricatedOverlays, "insetCornerRadius2") || FabricatedOverlay.isOverlayDisabled(fabricatedOverlays, "insetCornerRadius4"))) {
-                    if (!PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "cornerRadius").equals("null")) {
-                        FabricatedOverlay.buildOverlay("android", "dialogCornerRadius", "dimen", "dialog_corner_radius", "0x" + ((Integer.parseInt(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "cornerRadius")) + 8 + 16) * 100));
-                        FabricatedOverlay.buildOverlay("android", "insetCornerRadius2", "dimen", "harmful_app_name_padding_right", "0x" + ((Integer.parseInt(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "cornerRadius")) + 6 + 16) * 100));
-                        FabricatedOverlay.buildOverlay("android", "insetCornerRadius4", "dimen", "harmful_app_name_padding_left", "0x" + ((Integer.parseInt(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "cornerRadius")) + 4 + 16) * 100));
+                if (Prefs.loadPrefBool(Weeabooify.getAppContext(), "fabricatedcornerRadius") && (FabricatedOverlay.isOverlayDisabled(fabricatedOverlays, "dialogCornerRadius") || FabricatedOverlay.isOverlayDisabled(fabricatedOverlays, "insetCornerRadius2") || FabricatedOverlay.isOverlayDisabled(fabricatedOverlays, "insetCornerRadius4"))) {
+                    if (!Prefs.loadPrefSettings(Weeabooify.getAppContext(), "cornerRadius").equals("null")) {
+                        FabricatedOverlay.buildOverlay("android", "dialogCornerRadius", "dimen", "dialog_corner_radius", "0x" + ((Integer.parseInt(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "cornerRadius")) + 8 + 16) * 100));
+                        FabricatedOverlay.buildOverlay("android", "insetCornerRadius2", "dimen", "harmful_app_name_padding_right", "0x" + ((Integer.parseInt(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "cornerRadius")) + 6 + 16) * 100));
+                        FabricatedOverlay.buildOverlay("android", "insetCornerRadius4", "dimen", "harmful_app_name_padding_left", "0x" + ((Integer.parseInt(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "cornerRadius")) + 4 + 16) * 100));
                     } else {
                         FabricatedOverlay.buildOverlay("android", "dialogCornerRadius", "dimen", "dialog_corner_radius", "0x" + ((16 + 8 + 16) * 100));
                         FabricatedOverlay.buildOverlay("android", "insetCornerRadius2", "dimen", "harmful_app_name_padding_right", "0x" + ((16 + 6 + 16) * 100));

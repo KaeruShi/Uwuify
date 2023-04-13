@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import kaerushi.weeabooify.uwuify.Weeabooify;
 
-public class PrefConfig {
+public class Prefs {
 
     static SharedPreferences pref = Weeabooify.getAppContext().getSharedPreferences(Weeabooify.getAppContext().getPackageName(), Context.MODE_PRIVATE);
     private static final String SharedPref = "kaerushi.weeabooify.uwuify";

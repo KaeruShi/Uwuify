@@ -18,20 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.topjohnwu.superuser.Shell;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
 import kaerushi.weeabooify.uwuify.BuildConfig;
 import kaerushi.weeabooify.uwuify.R;
 import kaerushi.weeabooify.uwuify.Weeabooify;
 import kaerushi.weeabooify.uwuify.common.References;
-import kaerushi.weeabooify.uwuify.config.PrefConfig;
+import kaerushi.weeabooify.uwuify.config.Prefs;
 import kaerushi.weeabooify.uwuify.ui.view.AlertDialog;
 import kaerushi.weeabooify.uwuify.ui.view.LoadingDialogAlt;
 import kaerushi.weeabooify.uwuify.utils.CompilerUtil;
@@ -51,6 +45,7 @@ public class WelcomePage extends AppCompatActivity {
     private static Button install_module;
     private final int versionCode = BuildConfig.VERSION_CODE;
     private static startInstallationProcess installModule = null;
+    private static startInstallationProcessAosp installModuleAosp = null;
     private LoadingDialogAlt loadingDialog;
     private AlertDialog alertDialog;
 
@@ -79,7 +74,7 @@ public class WelcomePage extends AppCompatActivity {
         LinearLayout aosp_variant = findViewById(R.id.aosp_variant);
 
         nusa_variant.setOnClickListener(v -> {
-            PrefConfig.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "Nusan");
+            Prefs.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "Nusan");
             nusa_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
             rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
             los_variant.setBackground(getResources().getDrawable(R.drawable.container));
@@ -93,7 +88,7 @@ public class WelcomePage extends AppCompatActivity {
         });
 
         rr_variant.setOnClickListener(v -> {
-            PrefConfig.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "RR");
+            Prefs.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "RR");
             rr_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
             nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
             los_variant.setBackground(getResources().getDrawable(R.drawable.container));
@@ -107,7 +102,7 @@ public class WelcomePage extends AppCompatActivity {
         });
 
         los_variant.setOnClickListener(view -> {
-            PrefConfig.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "LOS");
+            Prefs.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "LOS");
             los_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
             nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
             rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
@@ -125,23 +120,22 @@ public class WelcomePage extends AppCompatActivity {
         });
 
         aosp_variant.setOnClickListener(view -> {
-            Toast.makeText(Weeabooify.getAppContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
-//            PrefConfig.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "AOSP");
-//            aosp_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
-//            los_variant.setBackground(getResources().getDrawable(R.drawable.container));
-//            nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
-//            rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
-//
-//            Transition transition = new Fade();
-//            transition.setDuration(1200);
-//            transition.addTarget(R.id.checkRoot);
-//            TransitionManager.beginDelayedTransition(aosp_variant, transition);
-//            install_module.setVisibility(View.VISIBLE);
+            Prefs.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "AOSP");
+            aosp_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
+            los_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
+
+            Transition transition = new Fade();
+            transition.setDuration(1200);
+            transition.addTarget(R.id.checkRoot);
+            TransitionManager.beginDelayedTransition(aosp_variant, transition);
+            install_module.setVisibility(View.VISIBLE);
         });
 
         // Check for root onClick
         install_module.setOnClickListener(v -> {
-            if (Objects.equals(PrefConfig.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "null"))
+            if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "null"))
                 Toast.makeText(Weeabooify.getAppContext(), "Select a ROM before proceeding", Toast.LENGTH_SHORT).show();
             else {
                 if (RootUtil.isDeviceRooted()) {
@@ -151,9 +145,14 @@ public class WelcomePage extends AppCompatActivity {
 
                             Toast.makeText(Weeabooify.getAppContext(), "Select a ROM before proceeding", Toast.LENGTH_SHORT).show();
                         } else {
-                            if ((PrefConfig.loadPrefInt(this, "versionCode") != versionCode) || !ModuleUtil.moduleExists() || !OverlayUtils.overlayExists()) {
-                                installModule = new startInstallationProcess();
-                                installModule.execute();
+                            if ((Prefs.loadPrefInt(this, "versionCode") != versionCode) || !ModuleUtil.moduleExists() || !OverlayUtils.overlayExists()) {
+                                if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "AOSP")) {
+                                    installModuleAosp = new startInstallationProcessAosp();
+                                    installModuleAosp.execute();
+                                } else {
+                                    installModule = new startInstallationProcess();
+                                    installModule.execute();
+                                }
                             } else {
                                 Intent intent = new Intent(WelcomePage.this, HomePage.class);
                                 startActivity(intent);
@@ -161,10 +160,10 @@ public class WelcomePage extends AppCompatActivity {
                             }
                         }
                     } else {
-                        Toast.makeText(Weeabooify.getAppContext(), "Select a ROM before proceeding", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Weeabooify.getAppContext(), "Install Magisk first", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(Weeabooify.getAppContext(), "Select a ROM before proceeding", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Weeabooify.getAppContext(), "Root your device first", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -183,8 +182,6 @@ public class WelcomePage extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-
             loadingDialog.show(getResources().getString(R.string.installing), getResources().getString(R.string.init_module_installation));
         }
 
@@ -280,6 +277,125 @@ public class WelcomePage extends AppCompatActivity {
 
             publishProgress(step);
             hasErroredOut = CompilerUtil.signAPK();
+
+            CompilerUtil.postExecute(hasErroredOut);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+
+            loadingDialog.hide();
+
+            if (!hasErroredOut) {
+                if (OverlayUtils.overlayExists()) {
+                    new Handler().postDelayed(() -> {
+                        Intent intent = new Intent(WelcomePage.this, HomePage.class);
+                        startActivity(intent);
+                        finish();
+                    }, 10);
+                } else {
+                    alertDialog.show(R.drawable.ic_info, "Setup Success", "Reboot your device to apply the overlays", true);
+                    install_module.setVisibility(View.GONE);
+                }
+            } else {
+                alertDialog.show(R.drawable.ic_info, "Setup Failed", getString(R.string.reason), false);
+                Shell.cmd("rm -rf " + References.MODULE_DIR).exec();
+                install_module.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            Shell.cmd("rm -rf " + References.DATA_DIR).exec();
+            Shell.cmd("rm -rf " + References.TEMP_DIR).exec();
+            Shell.cmd("rm -rf " + References.MODULE_DIR).exec();
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class startInstallationProcessAosp extends AsyncTask<Void, Integer, Integer> {
+
+        @SuppressLint("SetTextI18n")
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadingDialog.show(getResources().getString(R.string.installing), getResources().getString(R.string.init_module_installation));
+        }
+
+        @SuppressLint("SetTextI18n")
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+            String title = getResources().getString(R.string.step) + ' ' + values[0] + "/7";
+            String desc = getResources().getString(R.string.loading_dialog_wait);
+
+            switch (values[0]) {
+                case 1:
+                    desc = getResources().getString(R.string.module_installation_step1);
+                    break;
+                case 2:
+                    desc = getResources().getString(R.string.module_installation_step2);
+                    break;
+                case 3:
+                    desc = getResources().getString(R.string.module_installation_step3);
+                    break;
+                case 4:
+                    desc = getResources().getString(R.string.module_installation_step4);
+                    break;
+                case 5:
+                    desc = getResources().getString(R.string.module_installation_step5);
+                    break;
+                case 6:
+                    desc = getResources().getString(R.string.module_installation_step7);
+                    break;
+                case 7:
+                    desc = getResources().getString(R.string.module_installation_step9);
+                    break;
+            }
+
+            loadingDialog.setMessage(title, desc);
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            int step = 1;
+
+            publishProgress(step++);
+            try {
+                ModuleUtil.handleModule();
+            } catch (IOException e) {
+                hasErroredOut = true;
+                e.printStackTrace();
+            }
+
+            publishProgress(step++);
+            ModuleUtil.extractTools();
+
+            // AOSP
+            publishProgress(step++);
+            try {
+                AOSPCompilerUtil.preExecute();
+            } catch (IOException e) {
+                hasErroredOut = true;
+                e.printStackTrace();
+            }
+
+            publishProgress(step++);
+            hasErroredOut = AOSPCompilerUtil.buildOverlays();
+
+            publishProgress(step++);
+            hasErroredOut = AOSPCompilerUtil.alignAPK();
+
+            publishProgress(step++);
+            hasErroredOut = AOSPCompilerUtil.signAPK();
+
+            publishProgress(step);
+            AOSPCompilerUtil.postExecute(hasErroredOut);
 
             CompilerUtil.postExecute(hasErroredOut);
 
