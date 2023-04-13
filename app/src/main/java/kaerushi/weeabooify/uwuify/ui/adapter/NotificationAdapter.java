@@ -46,7 +46,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         // Preference key
         for (int i = 1; i <= itemList.size(); i++)
-            NOTIFICATION_KEY.add("UwuifyComponent" + i + ".overlay");
+            NOTIFICATION_KEY.add("UwuifyComponentNF" + i + ".overlay");
     }
 
     @NonNull
