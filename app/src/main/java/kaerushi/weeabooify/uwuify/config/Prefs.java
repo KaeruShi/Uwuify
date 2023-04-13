@@ -66,6 +66,8 @@ public class Prefs {
 
     // Clear all sharedPref config
     public static void clearAllPrefs() {
+        String romVariant = loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant");
         editor.clear().apply();
+        savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", romVariant);
     }
 }
