@@ -2,9 +2,10 @@ package kaerushi.weeabooify.uwuify.utils;
 
 import com.topjohnwu.superuser.Shell;
 
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
+
+import kaerushi.weeabooify.uwuify.config.Prefs;
 
 public class OverlayUtils {
 
@@ -41,10 +42,12 @@ public class OverlayUtils {
     }
 
     public static void enableOverlay(String pkgName) {
+        Prefs.putBoolean(pkgName, true);
         Shell.cmd("cmd overlay enable --user current " + pkgName, "cmd overlay set-priority " + pkgName + " highest").exec();
     }
 
     public static void disableOverlay(String pkgName) {
+        Prefs.putBoolean(pkgName, false);
         Shell.cmd("cmd overlay disable --user current " + pkgName).exec();
     }
 
