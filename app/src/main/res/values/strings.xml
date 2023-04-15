@@ -52,6 +52,12 @@
     <string name="opt_applied">Applied</string>
     <string name="toast_applied">Applied!</string>
     <string name="toast_disabled">Disabled.</string>
-    <string name="activity_title_notification">Notifiction</string>
+    <string name="activity_title_notification">Notification</string>
+    <string name="hide_vpn">Hide VPN footer</string>
+    <string name="miscellaneous">Miscellaneous</string>
+    <string name="hide_drag_handle">Hide drag handle</string>
+    <string name="toast_disabled_everything">All overlays disabled!</string>
+    <string name="hide_draw_notif_background">Hide draw notif background</string>
+    <string name="hide_notification_shadow">Hide notification shadow</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

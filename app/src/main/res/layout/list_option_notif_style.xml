@@ -51,6 +51,7 @@
         android:layout_gravity="start|center"
         android:layout_marginStart="@dimen/_25sdp"
         android:layout_marginEnd="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:orientation="vertical">
 
         <TextView
@@ -79,13 +80,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/container_padding"
-        android:text="@string/btn_enable" />
+        android:stateListAnimator="@null"
+        android:text="@string/btn_enable"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/disable_notif"
         style="@style/buttonMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:stateListAnimator="@null"
         android:layout_marginTop="@dimen/container_padding"
         android:background="@drawable/button_red"
         android:text="@string/btn_disable"

@@ -11,7 +11,7 @@
         android:id="@+id/collapsing_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="0dp"
+        android:clipToPadding="false"
         android:background="@color/colorBackground"
         android:fitsSystemWindows="true"
         app:collapsedTitleTextAppearance="@style/Toolbar.TitleText.Collapsed"
@@ -21,6 +21,9 @@
         app:expandedTitleTextAppearance="@style/Toolbar.TitleText.Expanded"
         app:expandedTitleTextColor="@color/textColorPrimary"
         app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+        app:extraMultilineHeightEnabled="true"
+        app:forceApplySystemWindowInsetTop="true"
+        app:titleCollapseMode="fade"
         app:title="Uwuify">
 
         <androidx.appcompat.widget.Toolbar

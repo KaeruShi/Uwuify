@@ -6,9 +6,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import kaerushi.weeabooify.uwuify.config.Prefs;
-import kaerushi.weeabooify.uwuify.ui.HomePage;
-import kaerushi.weeabooify.uwuify.ui.WelcomePage;
+import kaerushi.weeabooify.uwuify.ui.activity.MainHome;
+import kaerushi.weeabooify.uwuify.ui.activity.WelcomePage;
 import kaerushi.weeabooify.uwuify.utils.ModuleUtil;
 import kaerushi.weeabooify.uwuify.utils.OverlayUtils;
 import kaerushi.weeabooify.uwuify.utils.RootUtil;
@@ -31,9 +30,9 @@ public class SplashActivity extends AppCompatActivity {
 
         Intent intent;
 
-        if (RootUtil.isDeviceRooted() && RootUtil.isMagiskInstalled() && ModuleUtil.moduleExists() && OverlayUtils.overlayExists() && (versionCode != Prefs.loadPrefInt(Weeabooify.getAppContext(), "versionCode"))) {
+        if (RootUtil.isDeviceRooted() && RootUtil.isMagiskInstalled() && ModuleUtil.moduleExists() && OverlayUtils.overlayExists()) {
             keepShowing = false;
-            intent = new Intent(SplashActivity.this, HomePage.class);
+            intent = new Intent(SplashActivity.this, MainHome.class);
         } else {
             keepShowing = false;
             intent = new Intent(SplashActivity.this, WelcomePage.class);

@@ -1,5 +1,6 @@
 package kaerushi.weeabooify.uwuify.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class FragmentSC extends Fragment {
         return inflater.inflate(R.layout.fragment_schicksal, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

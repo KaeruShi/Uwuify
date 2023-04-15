@@ -23,40 +23,28 @@
         android:theme="@style/Theme.Weeabooify"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ProgressBar"
-            android:exported="false" />
-
-        <receiver
-            android:name=".services.BootCompletedReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name=".services.BackgroundService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <activity
-            android:name=".ui.Extras"
+            android:name=".ui.activity.Miscellaneous"
             android:exported="false" />
         <activity
-            android:name=".ui.Info"
+            android:name=".ui.activity.MainHome"
             android:exported="false" />
         <activity
-            android:name=".ui.QsStyle"
+            android:name=".ui.activity.ProgressBar"
             android:exported="false" />
         <activity
-            android:name=".ui.NotificationStyle"
+            android:name=".ui.activity.Extras"
             android:exported="false" />
         <activity
-            android:name=".ui.HomePage"
+            android:name=".ui.activity.Info"
             android:exported="false" />
         <activity
-            android:name=".ui.WelcomePage"
+            android:name=".ui.activity.QsStyle"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.NotificationStyle"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.WelcomePage"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"

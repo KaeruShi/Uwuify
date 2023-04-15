@@ -1,7 +1,5 @@
 package kaerushi.weeabooify.uwuify.installer;
 
-import com.topjohnwu.superuser.Shell;
-
 import java.io.File;
 
 import kaerushi.weeabooify.uwuify.Weeabooify;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.NotificationStyle">
+    tools:context=".ui.activity.NotificationStyle">
 
     <include layout="@layout/header" />
 
@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="18dp"
-            android:paddingHorizontal="0dp"
+            android:paddingHorizontal="20dp"
             android:layout_marginBottom="0dp"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />

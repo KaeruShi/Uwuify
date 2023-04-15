@@ -28,4 +28,5 @@ public class References {
 
     // Others
     public static final int BYTE_ACCESS_RATE = 8192;
+    public static final String SYSTEMUI_PACKAGE = "com.android.systemui";
 }
