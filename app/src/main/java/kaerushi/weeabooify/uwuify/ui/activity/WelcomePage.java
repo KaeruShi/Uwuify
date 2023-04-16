@@ -145,7 +145,7 @@ public class WelcomePage extends AppCompatActivity {
 
                             Toast.makeText(Weeabooify.getAppContext(), "Select a ROM before proceeding", Toast.LENGTH_SHORT).show();
                         } else {
-                            if ((Prefs.loadPrefInt(this, "versionCode") != versionCode) || !ModuleUtil.moduleExists() || !OverlayUtils.overlayExists()) {
+                            if (!ModuleUtil.moduleExists() || !OverlayUtils.overlayExists()) {
                                 if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "AOSP")) {
                                     installModuleAosp = new startInstallationProcessAosp();
                                     installModuleAosp.execute();

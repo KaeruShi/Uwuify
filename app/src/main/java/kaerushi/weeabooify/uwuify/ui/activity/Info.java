@@ -57,7 +57,7 @@ public class Info extends AppCompatActivity {
             imgVariant.setImageResource(R.drawable.logo_nusa);
         } else if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "AOSP")) {
             marqueeVariant.setText("AOSP Q");
-            imgVariant.setImageResource(R.drawable.aospq);
+            imgVariant.setImageResource(R.drawable.logo_aospq);
         }else
             marqueeVariant.setText("Unknown");
 

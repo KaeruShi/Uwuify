@@ -8,7 +8,6 @@
     <dimen name="cont_title_size2">14dp</dimen>
     <dimen name="cont_corner_radius">24dp</dimen>
     <dimen name="variant_img">46dp</dimen>
-    <dimen name="variant_padding">5dp</dimen>
-    <dimen name="notif_corner_radius">24dp</dimen>
     <dimen name="preference_height">56dp</dimen>
+    <dimen name="stroke_width">6dp</dimen>
 </resources>

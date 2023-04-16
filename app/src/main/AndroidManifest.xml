@@ -23,13 +23,13 @@
         android:theme="@style/Theme.Weeabooify"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.ExpandRV"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.Miscellaneous"
             android:exported="false" />
         <activity
             android:name=".ui.activity.MainHome"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.ProgressBar"
             android:exported="false" />
         <activity
             android:name=".ui.activity.Extras"

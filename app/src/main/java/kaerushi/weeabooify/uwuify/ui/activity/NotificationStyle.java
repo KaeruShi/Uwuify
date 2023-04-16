@@ -41,15 +41,15 @@ public class NotificationStyle extends AppCompatActivity {
         ArrayList<NotificationModel> notif_list = new ArrayList<>();
         notif_list.add(new NotificationModel("Transparent", R.color.transparent));
         notif_list.add(new NotificationModel("Separated", R.drawable.container));
-        notif_list.add(new NotificationModel("3D", R.drawable.container));
-        notif_list.add(new NotificationModel("iOS", R.drawable.container));
-        notif_list.add(new NotificationModel("Inline", R.drawable.container));
-        notif_list.add(new NotificationModel("Outline", R.drawable.container));
-        notif_list.add(new NotificationModel("Outline Bottom", R.drawable.container));
-        notif_list.add(new NotificationModel("Outline Top", R.drawable.container));
-        notif_list.add(new NotificationModel("Outline Vertical", R.drawable.container));
-        notif_list.add(new NotificationModel("Outline Horizntal", R.drawable.container));
-        notif_list.add(new NotificationModel("Twoblock", R.drawable.container));
+        notif_list.add(new NotificationModel("3D", R.drawable.notification_3d));
+        notif_list.add(new NotificationModel("iOS", R.drawable.notification_ios));
+        notif_list.add(new NotificationModel("Inline", R.drawable.notification_inline));
+        notif_list.add(new NotificationModel("Outline", R.drawable.notification_outline));
+        notif_list.add(new NotificationModel("Outline Bottom", R.drawable.notification_outline_bottom));
+        notif_list.add(new NotificationModel("Outline Top", R.drawable.notification_outline_top));
+        notif_list.add(new NotificationModel("Outline Vertical", R.drawable.notification_outline_vertical));
+        notif_list.add(new NotificationModel("Outline Horizontal", R.drawable.notification_outline_horizontal));
+        notif_list.add(new NotificationModel("Twoblock", R.drawable.notification_outline_twoblock));
 
         return new NotificationAdapter(this, notif_list, loadingDialog);
     }

@@ -223,7 +223,7 @@
                 <ImageView
                     android:layout_width="@dimen/variant_img"
                     android:layout_height="@dimen/variant_img"
-                    android:background="@drawable/aospq"
+                    android:background="@drawable/logo_aospq"
                     tools:ignore="ContentDescription" />
 
                 <LinearLayout
@@ -318,7 +318,6 @@
 
 
     <LinearLayout
-        android:id="@+id/progressBar_installingModule"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#44000000"

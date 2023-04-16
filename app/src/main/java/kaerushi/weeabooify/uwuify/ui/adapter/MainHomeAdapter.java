@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 import kaerushi.weeabooify.uwuify.R;
+import kaerushi.weeabooify.uwuify.ui.activity.ExpandRV;
 import kaerushi.weeabooify.uwuify.ui.activity.Extras;
 import kaerushi.weeabooify.uwuify.ui.activity.Info;
 import kaerushi.weeabooify.uwuify.ui.activity.NotificationStyle;

@@ -6,10 +6,10 @@ android {
     signingConfigs {
 
         debug {
-            storeFile file('D:\\Substratum\\keypath\\weeabooify.jks')
-            storePassword 'farel190'
+            storeFile file('D:\\Substratum\\keypath\\uwuify.jks')
+            storePassword 'uwuify'
             keyAlias 'key0'
-            keyPassword 'farel190'
+            keyPassword 'uwuify'
         }
     }
 

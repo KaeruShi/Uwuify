@@ -2,10 +2,12 @@ package kaerushi.weeabooify.uwuify.ui.adapter;
 
 import static kaerushi.weeabooify.uwuify.ui.utils.VBHelpers.setDrawable;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,18 +32,18 @@ import kaerushi.weeabooify.uwuify.ui.models.NotificationModel;
 import kaerushi.weeabooify.uwuify.ui.view.LoadingDialog;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
-
     Context context;
-    ArrayList<NotificationModel> itemList;
-    ArrayList<String> NOTIFICATION_KEY = new ArrayList<>();
+    private ArrayList<NotificationModel> itemList;
     LinearLayoutManager linearLayoutManager;
+    ArrayList<String> NOTIFICATION_KEY = new ArrayList<>();
     LoadingDialog loadingDialog;
-    int selectedItem = -1;
+    private final SparseBooleanArray mExpandedItems;
 
     public NotificationAdapter(Context context, ArrayList<NotificationModel> itemList, LoadingDialog loadingDialog) {
         this.context = context;
         this.itemList = itemList;
         this.loadingDialog = loadingDialog;
+        mExpandedItems = new SparseBooleanArray();
 
         // Preference key
         for (int i = 1; i <= itemList.size(); i++)
@@ -50,86 +52,39 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @NonNull
     @Override
-    public NotificationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_option_notif_style, parent, false);
         return new ViewHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
     @Override
-    public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         setDrawable(holder.container, ContextCompat.getDrawable(context, itemList.get(position).getBackground()));
+        NotificationModel rvModel = itemList.get(position);
+        holder.bind(rvModel);
         holder.style_name.setText(itemList.get(position).getName());
-        holder.ic_collapse_expand.setForeground(ContextCompat.getDrawable(context, R.drawable.ic_expand_arrow));
 
         if (Prefs.getBoolean(NOTIFICATION_KEY.get(position))) {
             holder.style_name.setText(holder.style_name.getText().toString().replace(' ' + context.getResources().getString(R.string.opt_applied), "") + ' ' + context.getResources().getString(R.string.opt_applied));
             holder.style_name.setTextColor(context.getResources().getColor(R.color.colorSuccess));
+            holder.btn_enable.setVisibility(View.GONE);
+            holder.btn_disable.setVisibility(View.VISIBLE);
         } else {
             holder.style_name.setText(holder.style_name.getText().toString().replace(' ' + context.getResources().getString(R.string.opt_applied), ""));
             holder.style_name.setTextColor(context.getResources().getColor(R.color.textColorPrimary));
+            holder.btn_enable.setVisibility(View.VISIBLE);
+            holder.btn_disable.setVisibility(View.GONE);
         }
-        refreshButton(holder);
-
-        enableOnClickListener(holder);
+        enableOnClick(holder);
     }
-
-    @Override
-    public int getItemCount() {
-        return itemList.size();
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
-        super.onViewAttachedToWindow(holder);
-
-        if (Prefs.getBoolean(NOTIFICATION_KEY.get(holder.getBindingAdapterPosition()))) {
-            holder.style_name.setText(holder.style_name.getText().toString().replace(' ' + context.getResources().getString(R.string.opt_applied), "") + ' ' + context.getResources().getString(R.string.opt_applied));
-            holder.style_name.setTextColor(context.getResources().getColor(R.color.colorSuccess));
-        } else {
-            holder.style_name.setText(holder.style_name.getText().toString().replace(' ' + context.getResources().getString(R.string.opt_applied), ""));
-            holder.style_name.setTextColor(context.getResources().getColor(R.color.textColorPrimary));
-        }
-
-        refreshButton(holder);
-    }
-
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
 
         linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
     }
-
-    // Function for onClick events
-    private void enableOnClickListener(ViewHolder holder) {
-        // Set onClick operation for each item
-        holder.container.setOnClickListener(v -> {
-            selectedItem = selectedItem == holder.getBindingAdapterPosition() ? -1 : holder.getBindingAdapterPosition();
-            refreshLayout(holder);
-
-            if (!Prefs.getBoolean(NOTIFICATION_KEY.get(holder.getBindingAdapterPosition()))) {
-                holder.btn_disable.setVisibility(View.GONE);
-                if (holder.btn_enable.getVisibility() == View.VISIBLE) {
-                    holder.btn_enable.setVisibility(View.GONE);
-                    holder.ic_collapse_expand.setForeground(ContextCompat.getDrawable(context, R.drawable.ic_expand_arrow));
-                } else {
-                    holder.btn_enable.setVisibility(View.VISIBLE);
-                    holder.ic_collapse_expand.setForeground(ContextCompat.getDrawable(context, R.drawable.ic_collapse_arrow));
-                }
-            } else {
-                holder.btn_enable.setVisibility(View.GONE);
-                if (holder.btn_disable.getVisibility() == View.VISIBLE) {
-                    holder.btn_disable.setVisibility(View.GONE);
-                    holder.ic_collapse_expand.setForeground(ContextCompat.getDrawable(context, R.drawable.ic_expand_arrow));
-                } else {
-                    holder.btn_disable.setVisibility(View.VISIBLE);
-                    holder.ic_collapse_expand.setForeground(ContextCompat.getDrawable(context, R.drawable.ic_collapse_arrow));
-                }
-            }
-        });
-
+    private void enableOnClick(ViewHolder holder) {
         // Set onClick operation for Enable button
         holder.btn_enable.setOnClickListener(v -> {
             // Show loading dialog
@@ -191,27 +146,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         });
     }
 
-    // Function to check for layout changes
-    private void refreshLayout(ViewHolder holder) {
-        int firstVisible = linearLayoutManager.findFirstVisibleItemPosition();
-        int lastVisible = linearLayoutManager.findLastVisibleItemPosition();
-
-        for (int i = firstVisible; i <= lastVisible; i++) {
-            View view = linearLayoutManager.findViewByPosition(i);
-
-            if (view != null) {
-                LinearLayout child = view.findViewById(R.id.notification_child);
-
-                if (!(view == holder.container) && child != null) {
-                    child.findViewById(R.id.enable_notif).setVisibility(View.GONE);
-                    child.findViewById(R.id.disable_notif).setVisibility(View.GONE);
-                    child.findViewById(R.id.notif_arrow).setForeground(ContextCompat.getDrawable(context, R.drawable.ic_expand_arrow));
-                }
-            }
-        }
-    }
-
-    // Function to check for applied options
     @SuppressLint("SetTextI18n")
     private void refreshName(ViewHolder holder) {
         int firstVisible = linearLayoutManager.findFirstVisibleItemPosition();
@@ -238,38 +172,71 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
     }
 
-    private void refreshButton(ViewHolder holder) {
-        if (holder.getBindingAdapterPosition() != selectedItem) {
-            holder.btn_enable.setVisibility(View.GONE);
-            holder.btn_disable.setVisibility(View.GONE);
-            holder.ic_collapse_expand.setForeground(ContextCompat.getDrawable(context, R.drawable.ic_expand_arrow));
-        } else {
-            if (Prefs.getBoolean(NOTIFICATION_KEY.get(selectedItem))) {
-                holder.btn_enable.setVisibility(View.GONE);
-                holder.btn_disable.setVisibility(View.VISIBLE);
-                holder.ic_collapse_expand.setForeground(ContextCompat.getDrawable(context, R.drawable.ic_expand_arrow));
-            } else {
-                holder.btn_enable.setVisibility(View.VISIBLE);
-                holder.btn_disable.setVisibility(View.GONE);
-                holder.ic_collapse_expand.setForeground(ContextCompat.getDrawable(context, R.drawable.ic_collapse_arrow));
-            }
-        }
+    @Override
+    public int getItemCount() {
+        return itemList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        LinearLayout container;
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView style_name;
-        ImageView ic_collapse_expand;
+        LinearLayout expand_view, container;
+        ImageView arrow;
         Button btn_enable, btn_disable;
+        private boolean isExpanded = false;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            container = itemView.findViewById(R.id.notification_child);
+
             style_name = itemView.findViewById(R.id.notif_title);
-            ic_collapse_expand = itemView.findViewById(R.id.notif_arrow);
-            btn_enable = itemView.findViewById(R.id.enable_notif);
-            btn_disable = itemView.findViewById(R.id.disable_notif);
+            container = itemView.findViewById(R.id.notification_child);
+            expand_view = itemView.findViewById(R.id.notif_expand_view);
+            arrow = itemView.findViewById(R.id.notif_arrow);
+            btn_enable = itemView.findViewById(R.id.notif_enable);
+            btn_disable = itemView.findViewById(R.id.notif_disable);
+
+            itemView.setOnClickListener(view -> {
+                boolean isExpanded = mExpandedItems.get(getAdapterPosition());
+                // Collapse all other items except for the current item
+                for (int i = 0; i < mExpandedItems.size(); i++) {
+                    int key = mExpandedItems.keyAt(i);
+                    if (key != getAdapterPosition() && mExpandedItems.get(key)) {
+                        mExpandedItems.put(key, false);
+                        notifyItemChanged(key);
+                    }
+                }
+                // Toggle the state of the current item
+                mExpandedItems.put(getAdapterPosition(), !isExpanded);
+                NotificationModel rvModel = itemList.get(getAbsoluteAdapterPosition());
+                animateExpandCollapse();
+                notifyItemChanged(getAdapterPosition());
+            });
+        }
+
+        private void animateExpandCollapse() {
+            if (mExpandedItems.get(getAdapterPosition())) {
+                arrow.setAlpha(0);
+                rotateIcon(180);
+            } else {
+                arrow.setAlpha(0);
+                rotateIcon(0);
+            }
+        }
+
+        public void bind(NotificationModel rvModel) {
+            style_name.setText(rvModel.getName());
+
+            if (mExpandedItems.get(getAdapterPosition())) {
+                rotateIcon(180);
+                expand_view.setVisibility(View.VISIBLE);
+            } else {
+                rotateIcon(0);
+                expand_view.setVisibility(View.GONE);
+            }
+        }
+
+        private void rotateIcon(float degrees) {
+            ObjectAnimator rotate = ObjectAnimator.ofFloat(arrow, View.ROTATION, degrees);
+            rotate.setDuration(300).start();
         }
     }
 }
