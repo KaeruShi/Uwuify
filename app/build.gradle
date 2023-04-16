@@ -7,9 +7,9 @@ android {
 
         debug {
             storeFile file('D:\\Substratum\\keypath\\uwuify.jks')
-            storePassword 'uwuify'
+            storePassword 'uwuify123'
             keyAlias 'key0'
-            keyPassword 'uwuify'
+            keyPassword 'uwuify123'
         }
     }
 
