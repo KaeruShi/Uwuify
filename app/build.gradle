@@ -5,12 +5,6 @@ plugins {
 android {
     signingConfigs {
 
-        debug {
-            storeFile file('D:\\Substratum\\keypath\\weeabooify.jks')
-            storePassword 'farel190'
-            keyAlias 'key0'
-            keyPassword 'farel190'
-        }
     }
 
     compileSdk 33
