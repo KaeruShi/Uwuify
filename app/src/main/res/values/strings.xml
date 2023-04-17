@@ -9,6 +9,11 @@
         <item>\n• Add Rom Support HavocOs</item>
         <item>\n• Add Rom Support LineageOs</item>
         <item>\n• Add Rom Support Universal</item>
+        <item>\n• Add 11 Notification Style</item>
+        <item>\n• Add 9 QS Panel Background Style</item>
+        <item>\n• Add some UI tweaks</item>
+        <item>\n• Improved UI</item>
+        <item>\n• Fix minor bugs</item>
         <item>\n\n<b>v1.0</b></item>
         <item>\n• Initial Release</item>
         <item>\n• Add Rom Support Nusantara</item>
@@ -20,7 +25,7 @@
         <item>\n• Add Style OctaviOS</item>
         <item>\n• Add Style OxygenOs</item>
     </string>
-    <string name="version">v1.0 | Initial Release</string>
+    <string name="version">v1.1 | Ichinose</string>
     <string name="Tester">\@WxW22, @KiLLeRrN8, @BarikL, @chamanchutiyaAFK, @Guhdosrootx, @Zeetsone, @mydarkeyess, @Yogaishere</string>
     <string name="installing">Installing</string>
     <string name="init_module_installation">Initializing...</string>
@@ -55,5 +60,9 @@
     <string name="hide_notification_shadow">Hide notification shadow</string>
     <string name="activity_title_qs_style">Quick Settings</string>
     <string name="qsb">QS Panel Background</string>
+    <string name="activity_title_qsb_variant">Qs Background</string>
+    <string name="activity_desc_qsb_variant">Change quick settings background</string>
+    <string name="not_support">This style isn\'t supported for your Rom.</string>
+    <string name="activity_title_qs_background">Qs Background</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+android:layout_gravity="center_vertical"
+android:paddingLeft="15.0dip"
+android:paddingRight="15.0dip"
+android:layout_width="fill_parent"
+android:layout_height="58dp"
+style="@*com.android.systemui:style/BrightnessDialogContainer"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:systemui="http://schemas.android.com/apk/res-auto">
+    <ImageButton
+        android:layout_gravity="center_vertical"
+        android:id="@*com.android.systemui:id/brightness_left"
+        android:background="@*com.android.systemui:drawable/mm_mouth3"
+        android:backgroundTint="?android:colorAccent"
+        android:tint="@*android:color/text_color_primary"
+        android:layout_width="40.0dip"
+        android:layout_height="40.0dip"
+        android:src="@*com.android.systemui:drawable/ic_brightness_left"
+        android:contentDescription="@null" />
+    <com.android.systemui.settings.ToggleSliderView
+        android:layout_gravity="center_vertical"
+        android:id="@*com.android.systemui:id/brightness_slider"
+        android:paddingRight="-15dp"
+        android:paddingLeft="-15dp"
+        android:layout_width="0.0dip"
+        android:layout_height="40.0dip"
+        android:layout_weight="1.0"
+        android:contentDescription="@*com.android.systemui:string/accessibility_brightness"
+        android:importantForAccessibility="no"
+        android:text="@*com.android.systemui:string/status_bar_settings_auto_brightness_label" />
+    <ImageButton
+        android:layout_gravity="center_vertical"
+        android:id="@*com.android.systemui:id/brightness_right"
+        android:background="@*com.android.systemui:drawable/mm_mouth3"
+        android:backgroundTint="?android:colorAccent"
+        android:tint="@*android:color/text_color_primary"
+        android:layout_width="40.0dip"
+        android:layout_height="40.0dip"
+        android:src="@*com.android.systemui:drawable/ic_brightness_right"
+        android:contentDescription="@null" />
+    <ImageButton
+        android:layout_gravity="center_vertical"
+        android:id="@*com.android.systemui:id/brightness_icon"
+        android:background="@*com.android.systemui:drawable/mm_mouth3"
+        android:backgroundTint="?android:colorAccent"
+        android:tint="@*android:color/text_color_primary"
+        android:layout_width="40.0dip"
+        android:layout_height="40.0dip"
+        android:layout_marginHorizontal="5dp"
+        android:src="@*com.android.systemui:drawable/ic_qs_brightness_auto_off"
+        android:contentDescription="@null"
+        android:paddingStart="4.0dip"
+        android:paddingEnd="4.0dip" />
+</LinearLayout>

@@ -87,13 +87,13 @@ public class Miscellaneous extends AppCompatActivity {
 
         hide_notif_shadow.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
-                Prefs.putBoolean("UwuifyComponentHDDH", true);
+                Prefs.putBoolean("UwuifyComponentHDNS", true);
                 hide_notif_shadow.setChecked(true);
-                OverlayUtils.enableOverlay("UwuifyComponentHDDH.overlay");
+                OverlayUtils.enableOverlay("UwuifyComponentHDNS.overlay");
             } else {
-                Prefs.putBoolean("UwuifyComponentHDDH", false);
+                Prefs.putBoolean("UwuifyComponentHDNS", false);
                 hide_notif_shadow.setChecked(false);
-                OverlayUtils.disableOverlay("UwuifyComponentHDDH.overlay");
+                OverlayUtils.disableOverlay("UwuifyComponentHDNS.overlay");
             }
         });
 
@@ -103,13 +103,13 @@ public class Miscellaneous extends AppCompatActivity {
 
         hide_draw_notif.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {
-                Prefs.putBoolean("UwuifyComponentHDDH", true);
+                Prefs.putBoolean("UwuifyComponentHDND", true);
                 hide_draw_notif.setChecked(true);
-                OverlayUtils.enableOverlay("UwuifyComponentHDDH.overlay");
+                OverlayUtils.enableOverlay("UwuifyComponentHDND.overlay");
             } else {
-                Prefs.putBoolean("UwuifyComponentHDDH", false);
+                Prefs.putBoolean("UwuifyComponentHDND", false);
                 hide_draw_notif.setChecked(false);
-                OverlayUtils.disableOverlay("UwuifyComponentHDDH.overlay");
+                OverlayUtils.disableOverlay("UwuifyComponentHDND.overlay");
             }
         });
     }

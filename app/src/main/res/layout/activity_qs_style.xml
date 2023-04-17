@@ -4,46 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     tools:context=".ui.activity.QsStyle">
 
     <include layout="@layout/header" />
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/qs_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="18dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/preference_height"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/container"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:onClick="qsb"
-                android:paddingHorizontal="20dp"
-                android:text="@string/qsb"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/qs_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="0dp"
-                android:orientation="vertical" />
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
+        android:layout_marginTop="18dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="20dp"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

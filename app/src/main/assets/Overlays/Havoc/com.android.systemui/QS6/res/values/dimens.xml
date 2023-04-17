@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="qs_quick_tile_size">55.0dip</dimen>
+    <dimen name="qs_tile_background_size">50.0dip</dimen>
+    <dimen name="notification_side_paddings">10dp</dimen>
+	<dimen name="notification_divider_height_increased">3dp</dimen>
+    <item type="dimen" name="qs_panel_padding_top">150dp</item>
+	<dimen name="notification_section_divider_height">5dp</dimen>
+	<dimen name="qs_notification_padding">5dp</dimen>
+	<dimen name="qs_header_tooltip_height">140dp</dimen>
+    <string name="stream_system">Weeabooify</string>
+</resources>

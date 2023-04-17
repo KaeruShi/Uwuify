@@ -55,6 +55,9 @@ public class Info extends AppCompatActivity {
         } else if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "LOS")) {
             marqueeVariant.setText("LineageOs");
             imgVariant.setImageResource(R.drawable.logo_nusa);
+        } else if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "Havoc")) {
+            marqueeVariant.setText("Havoc");
+            imgVariant.setImageResource(R.drawable.logo_havoc);
         } else if (Objects.equals(Prefs.loadPrefSettings(Weeabooify.getAppContext(), "selectedRomVariant"), "AOSP")) {
             marqueeVariant.setText("AOSP Q");
             imgVariant.setImageResource(R.drawable.logo_aospq);

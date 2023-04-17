@@ -116,7 +116,18 @@ public class WelcomePage extends AppCompatActivity {
         });
 
         havoc_variant.setOnClickListener(view -> {
-            Toast.makeText(Weeabooify.getAppContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
+            Prefs.savePrefSettings(Weeabooify.getAppContext(), "selectedRomVariant", "Havoc");
+            los_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            nusa_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            rr_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            aosp_variant.setBackground(getResources().getDrawable(R.drawable.container));
+            havoc_variant.setBackground(getResources().getDrawable(R.drawable.container_selected));
+
+            Transition transition = new Fade();
+            transition.setDuration(1200);
+            transition.addTarget(R.id.checkRoot);
+            TransitionManager.beginDelayedTransition(havoc_variant, transition);
+            install_module.setVisibility(View.VISIBLE);
         });
 
         aosp_variant.setOnClickListener(view -> {

@@ -63,7 +63,7 @@ public class Extras extends AppCompatActivity {
                     // Hide loading dialog
                     loadingDialog.hide();
                     Toast.makeText(Weeabooify.getAppContext(), getResources().getString(R.string.toast_disabled_everything), Toast.LENGTH_SHORT).show();
-                }, 3000));
+                }, 2000));
             };
             Thread thread = new Thread(runnable);
             thread.start();
@@ -89,7 +89,7 @@ public class Extras extends AppCompatActivity {
 
                 // Restart SystemUI
                 SystemUtil.restartSystemUI();
-            }, 3000);
+            }, 2000);
         });
 
 

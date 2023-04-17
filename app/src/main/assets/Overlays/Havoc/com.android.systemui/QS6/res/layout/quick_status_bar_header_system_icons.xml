@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@*com.android.systemui:id/quick_status_bar_system_icons" android:background="@*android:color/transparent" android:paddingTop="@*com.android.systemui:dimen/status_bar_padding_top" android:clickable="true" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="@*android:dimen/quick_qs_offset_height" android:paddingStart="@*com.android.systemui:dimen/status_bar_padding_start" android:paddingEnd="@*com.android.systemui:dimen/status_bar_padding_end"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:systemui="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:gravity="start|center" android:layout_width="0.0dip" android:layout_height="0dp" >
+        <com.android.systemui.statusbar.policy.Clock android:textAppearance="@*com.android.systemui:style/TextAppearance.StatusBar.Clock" android:gravity="start|center" android:id="@*com.android.systemui:id/clock" android:layout_width="wrap_content" android:layout_height="fill_parent" android:minWidth="48.0dip" android:singleLine="true" android:paddingStart="@*com.android.systemui:dimen/status_bar_left_clock_starting_padding" android:paddingEnd="@*com.android.systemui:dimen/status_bar_left_clock_end_padding" systemui:showDark="false" />
+    </LinearLayout>
+    <android.widget.Space android:layout_gravity="center" android:id="@*com.android.systemui:id/space" android:visibility="gone" android:layout_width="0.0dip" android:layout_height="fill_parent" />
+    <LinearLayout android:gravity="end|center" android:orientation="horizontal" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0">
+        <include layout="@*com.android.systemui:layout/ongoing_privacy_chip" />
+        <com.android.systemui.statusbar.policy.NetworkTraffic android:id="@*com.android.systemui:id/networkTraffic" android:layout_width="wrap_content" android:layout_height="fill_parent" android:singleLine="false" android:layout_marginStart="6.0dip" systemui:showDark="false" />
+        <com.android.systemui.BatteryMeterView android:id="@*com.android.systemui:id/battery" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="fill_parent" android:paddingStart="6.0dip" />
+    </LinearLayout>
+</LinearLayout>

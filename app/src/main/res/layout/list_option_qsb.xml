@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/qsb_child"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="18dp"
+    android:background="@drawable/container"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/_20sdp"
+    android:paddingVertical="@dimen/_20sdp">
+
+    <TextView
+        android:id="@+id/qsb_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/cont_title_size"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:padding="@dimen/_16sdp"
+            android:background="@drawable/qs_tile_bg"
+            android:src="@drawable/ic_wifi" />
+        <ImageView
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:padding="@dimen/_16sdp"
+            android:background="@drawable/qs_tile_bg"
+            android:src="@drawable/ic_bluetooth" />
+        <ImageView
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:padding="@dimen/_16sdp"
+            android:background="@drawable/qs_tile_bg"
+            android:src="@drawable/ic_airplanemode" />
+        <ImageView
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:padding="@dimen/_16sdp"
+            android:background="@drawable/qs_tile_bg"
+            android:src="@drawable/ic_screen_rotation" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/qsb_expand_view"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/qsb_enable"
+            style="@style/buttonMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/container_padding"
+            android:stateListAnimator="@null"
+            android:text="@string/btn_enable"/>
+
+        <Button
+            android:id="@+id/qsb_disable"
+            style="@style/buttonMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stateListAnimator="@null"
+            android:layout_marginTop="@dimen/container_padding"
+            android:background="@drawable/button_red"
+            android:text="@string/btn_disable"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</LinearLayout>

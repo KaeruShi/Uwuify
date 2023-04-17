@@ -7,9 +7,9 @@ android {
 
         debug {
             storeFile file('D:\\Substratum\\keypath\\uwuify.jks')
-            storePassword 'uwuify123'
+            storePassword 'uwuify'
             keyAlias 'key0'
-            keyPassword 'uwuify123'
+            keyPassword 'uwuify'
         }
     }
 
@@ -20,7 +20,7 @@ android {
         minSdk 29
         targetSdk 33
         versionCode 1
-        versionName "Initial Release"
+        versionName "Ichinose"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

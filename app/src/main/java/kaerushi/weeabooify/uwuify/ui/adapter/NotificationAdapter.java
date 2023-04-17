@@ -33,7 +33,7 @@ import kaerushi.weeabooify.uwuify.ui.view.LoadingDialog;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     Context context;
-    private ArrayList<NotificationModel> itemList;
+    private final ArrayList<NotificationModel> itemList;
     LinearLayoutManager linearLayoutManager;
     ArrayList<String> NOTIFICATION_KEY = new ArrayList<>();
     LoadingDialog loadingDialog;
@@ -182,7 +182,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         LinearLayout expand_view, container;
         ImageView arrow;
         Button btn_enable, btn_disable;
-        private boolean isExpanded = false;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -206,7 +205,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 }
                 // Toggle the state of the current item
                 mExpandedItems.put(getAdapterPosition(), !isExpanded);
-                NotificationModel rvModel = itemList.get(getAbsoluteAdapterPosition());
                 animateExpandCollapse();
                 notifyItemChanged(getAdapterPosition());
             });

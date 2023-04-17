@@ -2,16 +2,18 @@ package kaerushi.weeabooify.uwuify.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import kaerushi.weeabooify.uwuify.R;
+import kaerushi.weeabooify.uwuify.ui.adapter.MenuAdapter;
 import kaerushi.weeabooify.uwuify.ui.adapter.QsAdapter;
+import kaerushi.weeabooify.uwuify.ui.models.MenuModel;
 import kaerushi.weeabooify.uwuify.ui.models.QsModel;
 import kaerushi.weeabooify.uwuify.ui.utils.VBHelpers;
 import kaerushi.weeabooify.uwuify.ui.view.LoadingDialog;
@@ -35,8 +37,17 @@ public class QsStyle extends AppCompatActivity {
         // RecyclerView
         RecyclerView container = findViewById(R.id.qs_container);
         container.setLayoutManager(new LinearLayoutManager(this));
-        container.setAdapter(initQS());
+        ConcatAdapter adapter = new ConcatAdapter(initActivityItems(), initQS());
+        container.setAdapter(adapter);
         container.setHasFixedSize(true);
+    }
+
+    private MenuAdapter initActivityItems() {
+        ArrayList<MenuModel> brightnessbar_activity_list = new ArrayList<>();
+
+        brightnessbar_activity_list.add(new MenuModel(QsBackground.class, getResources().getString(R.string.activity_title_qsb_variant), getResources().getString(R.string.activity_desc_qsb_variant), R.drawable.ic_qs));
+
+        return new MenuAdapter(this, brightnessbar_activity_list);
     }
 
     private QsAdapter initQS() {
@@ -63,7 +74,4 @@ public class QsStyle extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void qsb(View view) {
-        
-    }
 }

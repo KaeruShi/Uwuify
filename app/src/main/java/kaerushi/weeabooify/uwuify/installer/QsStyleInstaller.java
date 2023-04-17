@@ -1,82 +1,72 @@
 package kaerushi.weeabooify.uwuify.installer;
 
-import kaerushi.weeabooify.uwuify.Weeabooify;
-import kaerushi.weeabooify.uwuify.config.Prefs;
-
-import com.topjohnwu.superuser.Shell;
-
 import java.io.File;
+
+import kaerushi.weeabooify.uwuify.config.Prefs;
+import kaerushi.weeabooify.uwuify.utils.OverlayUtils;
 
 public class QsStyleInstaller {
 
     private static final int TOTAL_QSSTYLE = 6;
 
-    public static void install_pack(int n) {
+    public static void enableOverlay(int n) {
         disable_others(n);
         enable_pack(n);
-        Prefs.savePrefBool(Weeabooify.getAppContext(), "fabricatedcornerRadius", true);
     }
 
-    private static void enable_pack(int n) {
-
+    protected static void enable_pack(int n) {
         String[] paths = {"/system/product/overlay/UwuifyComponentADDAS" + n + ".apk", "/system/product/overlay/UwuifyComponentQS" + n + ".apk"};
 
-        for (String path : paths) {
-            if (new File(path).exists()) {
+        if (new File(paths[0]).exists()) {
+            String overlay = "UwuifyComponentADDAS" + n + ".overlay";
 
-                String overlay = (path.replaceAll("/system/product/overlay/", "")).replaceAll("apk", "overlay");
+            if (!Prefs.getBoolean(overlay))
+                OverlayUtils.enableOverlay(overlay);
+        }
 
-                try {
-                    Shell.cmd("cmd overlay enable --user current " + overlay).exec();
-                } catch (Throwable t) {
-                    t.printStackTrace();
-                }
-            }
+        if (new File(paths[1]).exists()) {
+            String overlay = "UwuifyComponentQS" + n + ".overlay";
+
+            if (!Prefs.getBoolean(overlay))
+                OverlayUtils.enableOverlay(overlay);
         }
     }
 
-
     public static void disable_pack(int n) {
-
         String[] paths = {"/system/product/overlay/UwuifyComponentADDAS" + n + ".apk", "/system/product/overlay/UwuifyComponentQS" + n + ".apk"};
 
-        for (String path : paths) {
-            if (new File(path).exists()) {
+        if (new File(paths[0]).exists()) {
+            String overlay = "UwuifyComponentADDAS" + n + ".overlay";
 
-                String overlay = (path.replaceAll("/system/product/overlay/", "")).replaceAll("apk", "overlay");
+            if (Prefs.getBoolean(overlay))
+                OverlayUtils.disableOverlay(overlay);
+        }
 
-                try {
-                    Shell.cmd("cmd overlay disable --user current " + overlay).exec();
-                } catch (Throwable t) {
-                    t.printStackTrace();
-                }
-            }
+        if (new File(paths[1]).exists()) {
+            String overlay = "UwuifyComponentQS" + n + ".overlay";
+
+            if (Prefs.getBoolean(overlay))
+                OverlayUtils.disableOverlay(overlay);
         }
     }
 
     protected static void disable_others(int n) {
-
         for (int i = 1; i <= TOTAL_QSSTYLE; i++) {
             if (i != n) {
                 String[] paths = {"/system/product/overlay/UwuifyComponentADDAS" + i + ".apk", "/system/product/overlay/UwuifyComponentQS" + i + ".apk"};
 
                 if (new File(paths[0]).exists()) {
                     String overlay = "UwuifyComponentADDAS" + i + ".overlay";
-                    try {
-                        Shell.cmd("cmd overlay disable --user current " + overlay).exec();
-                    } catch (Throwable t) {
-                        t.printStackTrace();
-                    }
+
+                    if (Prefs.getBoolean(overlay))
+                        OverlayUtils.disableOverlay(overlay);
                 }
 
                 if (new File(paths[1]).exists()) {
                     String overlay = "UwuifyComponentQS" + i + ".overlay";
-                    try {
-                        Shell.cmd("cmd overlay disable --user current " + overlay).exec();
-                    } catch (Throwable t) {
-                        t.printStackTrace();
-                    }
 
+                    if (Prefs.getBoolean(overlay))
+                        OverlayUtils.disableOverlay(overlay);
                 }
             }
         }

@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/container_margin"
-    android:animateLayoutChanges="true"
     android:background="@drawable/container"
     android:orientation="vertical"
     android:paddingBottom="25dp">
@@ -62,31 +61,46 @@
                     android:textStyle="bold"
                     tools:ignore="SpUsage" />
 
-                <Button
-                    android:id="@+id/qs_enable"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/qs_summary"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/container_padding"
-                    android:background="@drawable/button"
-                    android:stateListAnimator="@null"
-                    android:text="Enable"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorBackground"
-                    android:textSize="@dimen/cont_title_size"
+                    android:text="@string/not_support"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
                     android:visibility="gone" />
 
-                <Button
-                    android:id="@+id/qs_disable"
+                <LinearLayout
+                    android:id="@+id/qs_expand_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/container_padding"
-                    android:background="@drawable/button_red"
-                    android:stateListAnimator="@null"
-                    android:text="Disable"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorBackground"
-                    android:textSize="@dimen/cont_title_size"
-                    android:visibility="gone" />
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/qs_enable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/container_padding"
+                        android:background="@drawable/button"
+                        android:stateListAnimator="@null"
+                        android:text="Enable"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorBackground"
+                        android:textSize="@dimen/cont_title_size" />
+
+                    <Button
+                        android:id="@+id/qs_disable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/container_padding"
+                        android:background="@drawable/button_red"
+                        android:stateListAnimator="@null"
+                        android:text="Disable"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorBackground"
+                        android:textSize="@dimen/cont_title_size"
+                        android:visibility="gone" />
+                </LinearLayout>
 
             </LinearLayout>
 

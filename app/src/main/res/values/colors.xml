@@ -19,9 +19,14 @@
     <color name="colorSuccess">#FF4FBF26</color>
     <color name="container_selected">#C8FFCB</color>
 
+    <color name="qs_tile_bg">#fff</color>
+
+    <color name="ios_layer_2">#E7E8EA</color>
+    <color name="ios_layer_3">#F3F3F4</color>
 
     <color name="switch_track_active">@color/colorAccent</color>
     <color name="switch_track_inactive">#dddddd</color>
     <color name="switch_thumb_active">@color/white</color>
-    <color name="switch_thumb_inactive">@color/white</color>
+    <color name="switch_thumb_inactive">#9fffffff</color>
+    <color name="disabled">#9fffffff</color>
 </resources>
